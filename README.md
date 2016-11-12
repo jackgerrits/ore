@@ -1,4 +1,6 @@
 # Ore
+[![Build Status](https://travis-ci.org/jackgerrits/ore.svg?branch=master)](https://travis-ci.org/jackgerrits/ore)
+
 An OpenGL rendering engine.
 
 This is an in progress port of the engine used in my [other project](https://github.com/jackgerrits/opengl-car-game) to a generic reusable engine.
