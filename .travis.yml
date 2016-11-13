@@ -13,9 +13,7 @@ addons:
       - cmake-data
 
 before_script:
-  - sudo apt-get update
-  - sudo apt-get install libglfw3 libglfw3-dev
-  # - sudo apt-get install libglew-dev libglu1-mesa-dev freeglut3-dev mesa-common-dev
+  - git clone https://github.com/glfw/glfw && mkdir build && cd build && cmake ../glfw && make -j4 && sudo make install
 
 script:
   - cmake . && make
