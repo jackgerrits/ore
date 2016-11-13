@@ -14,6 +14,7 @@ addons:
 
 before_script:
   - git clone https://github.com/glfw/glfw && cd glfw && cmake . && make -j4 && sudo make install && cd ..
+  - git clone https://github.com/nigels-com/glew && cd glew && make && sudo make install && cd ..
 
 
 script:
