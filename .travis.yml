@@ -4,9 +4,17 @@ compiler:
   - gcc
   - clang
 
+addons:
+  apt:
+    sources:
+      - george-edison55-precise-backports # cmake 3.2.3 / doxygen 1.8.3
+    packages:
+      - cmake
+      - cmake-data
+
 before_script:
   # - sudo apt-get install libglfw3-dev
-  - sudo apt-get install libglew-dev libglu1-mesa-dev freeglut3-dev mesa-common-dev
+  # - sudo apt-get install libglew-dev libglu1-mesa-dev freeglut3-dev mesa-common-dev
 
 script:
   - cmake . && make
