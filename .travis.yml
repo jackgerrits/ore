@@ -13,7 +13,8 @@ addons:
       - cmake-data
 
 before_script:
-  - git clone https://github.com/glfw/glfw && mkdir build && cd build && cmake ../glfw && make -j4 && sudo make install
+  - git clone https://github.com/glfw/glfw && cd glfw && cmake . && make -j4 && sudo make install && cd ..
+
 
 script:
   - cmake . && make
