@@ -14,6 +14,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <memory>
 #include <iostream>
 #include <glm/glm.hpp>
 
@@ -33,8 +34,8 @@ namespace ore {
         std::vector<float> generateNormals(std::vector<float> vertices, std::vector<unsigned int> indices);
 
         bool fileExists(const std::string& name);
-        Model loadModel(std::string filepath);
-        Model loadModel(std::vector<tinyobj::shape_t> shapes, std::vector<tinyobj::material_t> materials, std::string materialpath);
+        std::shared_ptr<Model> loadModel(std::string filepath);
+        std::shared_ptr<Model> loadModel(std::vector<tinyobj::shape_t> shapes, std::vector<tinyobj::material_t> materials, std::string materialpath);
         ModelComponent loadModelComponent(tinyobj::shape_t, std::vector<tinyobj::material_t> materials, std::string materialpath);
         ModelComponent loadModelComponent(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords);
         ModelComponent loadModelComponent(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::vector<float> normals);
@@ -46,7 +47,7 @@ namespace ore {
         GLuint loadVAO(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::vector<float> normals);
         GLuint loadVAO(tinyobj::shape_t);
 
-        Image loadImage(std::string filepath);
+        std::unique_ptr<Image> loadImage(std::string filepath);
         GLuint loadCubemapTexture(std::vector<std::string> filenames);
         GLuint loadTexture(std::string filepath);
         GLuint loadDefaultTexture();

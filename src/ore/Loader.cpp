@@ -52,14 +52,13 @@ namespace ore {
         return resultNormals;
     }
 
-
     // http://stackoverflow.com/questions/12774207/fastest-way-to-check-if-a-file-exist-using-standard-c-c11-c
     inline bool Loader::fileExists(const std::string& name) {
         struct stat buffer;
         return (stat (name.c_str(), &buffer) == 0);
     }
 
-    Model Loader::loadModel(std::string filepath) {
+    std::shared_ptr<Model> Loader::loadModel(std::string filepath) {
         // Declare containers for object values
         std::vector<tinyobj::shape_t> shapes;
         std::vector<tinyobj::material_t> materials;
@@ -88,14 +87,16 @@ namespace ore {
         return loadModel(shapes, materials, mtlPath);
     }
 
-    Model Loader::loadModel(std::vector<tinyobj::shape_t> shapes, std::vector<tinyobj::material_t> materials, std::string materialpath) {
-        Model model;
+    std::shared_ptr<Model> Loader::loadModel(std::vector<tinyobj::shape_t> shapes, std::vector<tinyobj::material_t> materials, std::string materialpath) {
+        Model* model = new Model();
+
         for(size_t i = 0; i < shapes.size(); i++) {
             ModelComponent component = loadModelComponent(shapes[i], materials, materialpath);
-            model.addRange(shapes[i].mesh.positions);
-            model.addModelComponent(component);
+            model->addRange(shapes[i].mesh.positions);
+            model->addModelComponent(component);
         }
-        return model;
+
+        return std::shared_ptr<Model>(model);
     }
 
     ModelComponent Loader::loadModelComponent(tinyobj::shape_t shape, std::vector<tinyobj::material_t> materials, std::string materialpath) {
@@ -232,7 +233,7 @@ namespace ore {
             shape.mesh.normals);
     }
 
-    Image Loader::loadImage(std::string filepath) {
+    std::unique_ptr<Image> Loader::loadImage(std::string filepath) {
         int x, y, n;
         unsigned char *data = stbi_load(
             filepath.c_str(),   // char* filepath
@@ -242,7 +243,7 @@ namespace ore {
             0                   // Force number of channels if > 0
         );
 
-        return Image(data, x, y, n);
+        return std::unique_ptr<Image>(new Image(data, x, y, n));
     }
 
     GLuint Loader::loadCubemapTexture(std::vector<std::string> filenames) {
@@ -262,15 +263,14 @@ namespace ore {
                 std::cerr << "[Loader][Error] Skybox texture file " << i << " doesnt exist." << std::endl;
             }
 
-            Image image = loadImage(filenames[i]);
+            std::unique_ptr<Image> image = loadImage(filenames[i]);
 
             GLenum format = GL_RGB;
-            if(image.channels==4) {
+            if(image->channels==4) {
                 format = GL_RGBA;
             }
 
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, image.width, image.height, 0, format, GL_UNSIGNED_BYTE, image.data);
-            stbi_image_free(image.data);
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, image->width, image->height, 0, format, GL_UNSIGNED_BYTE, image->data);
             glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -294,11 +294,9 @@ namespace ore {
         }
 
         // Load an image from file as texture
-        Image image = loadImage(filepath);
+        std::unique_ptr<Image> image = loadImage(filepath);
 
-        GLuint textureID = loadTextureData(image.data, image.width, image.height, image.channels, GL_TEXTURE0);
-
-        stbi_image_free(image.data);
+        GLuint textureID = loadTextureData(image->data, image->width, image->height, image->channels, GL_TEXTURE0);
 
         // Save texture to cache
         loadedTextures[filepath] = textureID;
