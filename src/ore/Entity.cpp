@@ -5,7 +5,7 @@ using namespace std;
 namespace ore {
 
     // Constructor accepts a model defining vertex, colour and index data for this entity.
-    Entity::Entity(Model* model){
+    Entity::Entity(Model* model) {
         this->model = model;
 
         position = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -15,7 +15,7 @@ namespace ore {
         zRot = 0.0f;
     }
 
-    Entity::Entity(){
+    Entity::Entity() {
         this->model = NULL;
 
         position = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -25,7 +25,7 @@ namespace ore {
         zRot = 0.0f;
     }
 
-    bool Entity::update(){
+    bool Entity::update() {
         return false;
     }
 
@@ -33,11 +33,10 @@ namespace ore {
         return model;
     }
 
-    glm::mat4 Entity::getModelMatrix(){
+    glm::mat4 Entity::getModelMatrix() {
         glm::mat4 rotation = calculateRotationMatrix(xRot, yRot, zRot);
         return calculateModelMatrix(position, rotation, scale);
     }
-
 
     // Getters and setters for entity state values.
     glm::vec3 Entity::getPosition() const {
@@ -48,61 +47,61 @@ namespace ore {
         return scale;
     }
 
-    float Entity::getRotationX() const{
+    float Entity::getRotationX() const {
         return xRot;
     }
 
-    float Entity::getRotationY() const{
+    float Entity::getRotationY() const {
         return yRot;
     }
 
-    float Entity::getRotationZ() const{
+    float Entity::getRotationZ() const {
         return zRot;
     }
 
-    glm::vec3 Entity::getDirectionVector(){
+    glm::vec3 Entity::getDirectionVector() {
         return glm::normalize(glm::vec3(glm::sin(yRot), glm::sin(xRot), glm::cos(yRot)));
     }
 
-    void Entity::setPosition(glm::vec3 position){
+    void Entity::setPosition(glm::vec3 position) {
         this->position = position;
     }
 
-    void Entity::placeBottomEdge(float surfaceY){
-        if(model != NULL){
+    void Entity::placeBottomEdge(float surfaceY) {
+        if(model != NULL) {
             position.y = surfaceY - model->getRangeInDim(1).first * scale.y;
         }
     }
 
-    void Entity::setScale(glm::vec3 scale){
+    void Entity::setScale(glm::vec3 scale) {
         this->scale = scale;
     }
 
-    void Entity::setRotationX(float rot){
+    void Entity::setRotationX(float rot) {
         xRot = rot;
     }
 
-    void Entity::setRotationY(float rot){
+    void Entity::setRotationY(float rot) {
         yRot = rot;
     }
 
-    void Entity::setRotationZ(float rot){
+    void Entity::setRotationZ(float rot) {
         zRot = rot;
     }
     // Set the value of rotation or position relatively (Takes into account current value)
-    void Entity::rotateX(float rot){
+    void Entity::rotateX(float rot) {
         xRot += rot;
     }
 
-    void Entity::rotateY(float rot){
+    void Entity::rotateY(float rot) {
         yRot += rot;
     }
 
-    void Entity::rotateZ(float rot){
+    void Entity::rotateZ(float rot) {
         zRot += rot;
     }
 
-    void Entity::move(glm::vec3 movement){
+    void Entity::move(glm::vec3 movement) {
         position = position + movement;
     }
 

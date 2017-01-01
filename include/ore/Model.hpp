@@ -14,7 +14,6 @@
 #include <GL/glew.h>
 
 namespace ore {
-
     // Represents a single mesh/shape/vao
     class ModelComponent {
     private:
