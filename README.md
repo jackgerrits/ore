@@ -1,5 +1,8 @@
 # Ore
+<!--
+remove build status until issues sorted out
 [![Build Status](https://travis-ci.org/jackgerrits/ore.svg?branch=master)](https://travis-ci.org/jackgerrits/ore)
+-->
 
 An OpenGL rendering engine.
 

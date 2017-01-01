@@ -5,17 +5,11 @@
 #define VALS_PER_TEX 2
 
 namespace ore {
-    // Initialise Loader singleton
-    Loader* Loader::loader = NULL;
-
     Loader::Loader(){}
 
-    Loader* Loader::getLoader(){
-        if(loader == NULL){
-            loader = new Loader();
-        }
-
-        return loader;
+    Loader& Loader::getLoader(){
+        static Loader instance;
+        return instance;
     }
 
     glm::vec3 getVertex(const std::vector<float>& vertices, int index){

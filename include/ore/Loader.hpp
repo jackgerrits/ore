@@ -10,6 +10,7 @@
 
 #include <sys/stat.h>
 #include <GL/glew.h>
+#include <GL/freeglut.h>
 #include <string>
 #include <vector>
 #include <map>
@@ -19,7 +20,6 @@
 namespace ore {
     class Loader {
     private:
-        static Loader* loader;
         Loader();
 
         // Stores the file/id mapping for each loaded texture to use for caching.
@@ -28,7 +28,7 @@ namespace ore {
         GLuint setupBuffer(unsigned int buffer, std::vector<float> values, int attributeIndex, int dataDimension);
         GLuint setupIndicesBuffer(unsigned int buffer, std::vector<unsigned int> values);
     public:
-        static Loader* getLoader();
+        static Loader& getLoader();
 
         std::vector<float> generateNormals(std::vector<float> vertices, std::vector<unsigned int> indices);
 
