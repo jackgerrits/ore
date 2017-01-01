@@ -5,6 +5,7 @@
 
 #include <ore/Model.hpp>
 
+#include <memory>
 #include <assert.h>
 #include <string>
 #include <iostream>
@@ -15,7 +16,7 @@ namespace ore {
 
     class Entity {
     protected:
-        Model* model;
+        std::shared_ptr<Model> model;
 
         glm::vec3 position;
         glm::vec3 scale;
@@ -24,12 +25,12 @@ namespace ore {
         float zRot;
 
     public:
-        Entity(Model* model);
+        Entity(std::shared_ptr<Model> model);
         Entity();
 
         virtual bool update();
 
-        Model* getModel() const;
+        std::shared_ptr<Model> getModel() const;
         glm::mat4 getModelMatrix();
 
         glm::vec3 getPosition() const;

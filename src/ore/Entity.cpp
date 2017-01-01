@@ -5,7 +5,7 @@ using namespace std;
 namespace ore {
 
     // Constructor accepts a model defining vertex, colour and index data for this entity.
-    Entity::Entity(Model* model) {
+    Entity::Entity(shared_ptr<Model> model) {
         this->model = model;
 
         position = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -16,8 +16,6 @@ namespace ore {
     }
 
     Entity::Entity() {
-        this->model = NULL;
-
         position = glm::vec3(0.0f, 0.0f, 0.0f);
         scale = glm::vec3(1.0f, 1.0f, 1.0f);
         xRot = 0.0f;
@@ -29,7 +27,7 @@ namespace ore {
         return false;
     }
 
-    Model* Entity::getModel() const {
+    shared_ptr<Model> Entity::getModel() const {
         return model;
     }
 
@@ -68,7 +66,7 @@ namespace ore {
     }
 
     void Entity::placeBottomEdge(float surfaceY) {
-        if(model != NULL) {
+        if(model) {
             position.y = surfaceY - model->getRangeInDim(1).first * scale.y;
         }
     }
