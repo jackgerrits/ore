@@ -91,15 +91,15 @@ namespace ore {
         Model* model = new Model();
 
         for(size_t i = 0; i < shapes.size(); i++) {
-            ModelComponent component = loadModelComponent(shapes[i], materials, materialpath);
+            ModelPart part = loadModelPart(shapes[i], materials, materialpath);
             model->addRange(shapes[i].mesh.positions);
-            model->addModelComponent(component);
+            model->addModelPart(part);
         }
 
         return std::shared_ptr<Model>(model);
     }
 
-    ModelComponent Loader::loadModelComponent(tinyobj::shape_t shape, std::vector<tinyobj::material_t> materials, std::string materialpath) {
+    ModelPart Loader::loadModelPart(tinyobj::shape_t shape, std::vector<tinyobj::material_t> materials, std::string materialpath) {
         GLuint vao = loadVAO(shape);
         int numIndices = shape.mesh.indices.size();
 
@@ -110,39 +110,39 @@ namespace ore {
         }
         GLuint textureID = loadTexture(materialpath + material.diffuseTexture);
 
-        return ModelComponent(vao, numIndices, textureID, material);
+        return ModelPart(vao, numIndices, textureID, material);
     }
 
-    ModelComponent Loader::loadModelComponent(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords) {
+    ModelPart Loader::loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords) {
         GLuint vao = loadVAO(vertices, indices, texCoords);
         int numIndices = indices.size();
         GLuint textureID = loadDefaultTexture();
 
-        return ModelComponent(vao, numIndices, textureID);
+        return ModelPart(vao, numIndices, textureID);
     }
 
-    ModelComponent Loader::loadModelComponent(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::vector<float> normals) {
+    ModelPart Loader::loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::vector<float> normals) {
         GLuint vao = loadVAO(vertices, indices, texCoords, normals);
         int numIndices = indices.size();
         GLuint textureID = loadDefaultTexture();
 
-        return ModelComponent(vao, numIndices, textureID);
+        return ModelPart(vao, numIndices, textureID);
     }
 
-    ModelComponent Loader::loadModelComponent(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::string texturepath) {
+    ModelPart Loader::loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::string texturepath) {
         GLuint vao = loadVAO(vertices, indices, texCoords);
         int numIndices = indices.size();
         GLuint textureID = loadTexture(texturepath);
 
-        return ModelComponent(vao, numIndices, textureID);
+        return ModelPart(vao, numIndices, textureID);
     }
 
-    ModelComponent Loader::loadModelComponent(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::vector<float> normals, std::string texturepath) {
+    ModelPart Loader::loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::vector<float> normals, std::string texturepath) {
         GLuint vao = loadVAO(vertices, indices, texCoords, normals);
         int numIndices = indices.size();
         GLuint textureID = loadTexture(texturepath);
 
-        return ModelComponent(vao, numIndices, textureID);
+        return ModelPart(vao, numIndices, textureID);
     }
 
     GLuint Loader::loadVAO(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords) {

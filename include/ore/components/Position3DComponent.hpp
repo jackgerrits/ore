@@ -3,7 +3,7 @@
 
 #define _USE_MATH_DEFINES
 
-#include <ore/Component.hpp>
+#include <ore/components/Component.hpp>
 
 #include <glm/ext.hpp>
 #include <vector>
@@ -19,9 +19,6 @@ namespace ore {
     };
 
     Position3DComponent::Position3DComponent() {
-        // Register this component to have an id.
-        Component::id = id<Position3DComponent>();
-
         position = glm::vec3(0.0f, 0.0f, 0.0f);
         scale = glm::vec3(1.0f, 1.0f, 1.0f);
         rotation = glm::vec3(0.0f, 0.0f, 0.0f);

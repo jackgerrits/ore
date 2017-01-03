@@ -3,7 +3,8 @@
 
 #define _USE_MATH_DEFINES
 
-#include <ore/Component.hpp>
+#include <ore/components/Component.hpp>
+#include <ore/Model.hpp>
 
 #include <glm/ext.hpp>
 #include <vector>
@@ -13,10 +14,10 @@ namespace ore {
     public:
         std::shared_ptr<Model> model;
 
-        ModelComponent();
+        ModelComponent(std::shared_ptr<Model> model);
     };
 
-    ModelComponent::ModelComponent(shared_ptr<Model> model) {
+    ModelComponent::ModelComponent(std::shared_ptr<Model> model) {
         this->model = model;
     }
 }

@@ -36,11 +36,11 @@ namespace ore {
         bool fileExists(const std::string& name);
         std::shared_ptr<Model> loadModel(std::string filepath);
         std::shared_ptr<Model> loadModel(std::vector<tinyobj::shape_t> shapes, std::vector<tinyobj::material_t> materials, std::string materialpath);
-        ModelComponent loadModelComponent(tinyobj::shape_t, std::vector<tinyobj::material_t> materials, std::string materialpath);
-        ModelComponent loadModelComponent(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords);
-        ModelComponent loadModelComponent(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::vector<float> normals);
-        ModelComponent loadModelComponent(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::string texturepath);
-        ModelComponent loadModelComponent(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::vector<float> normals, std::string texturepath);
+        ModelPart loadModelPart(tinyobj::shape_t, std::vector<tinyobj::material_t> materials, std::string materialpath);
+        ModelPart loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords);
+        ModelPart loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::vector<float> normals);
+        ModelPart loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::string texturepath);
+        ModelPart loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::vector<float> normals, std::string texturepath);
 
         GLuint loadVAO(std::vector<float> vertices, std::vector<unsigned int> indices);
         GLuint loadVAO(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords);

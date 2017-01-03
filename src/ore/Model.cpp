@@ -1,43 +1,43 @@
 #include <ore/Model.hpp>
 
 namespace ore {
-    ModelComponent::ModelComponent(GLuint vaoID, int indexCount, GLuint textureID, Material material) {
+    ModelPart::ModelPart(GLuint vaoID, int indexCount, GLuint textureID, Material material) {
         this->vaoID = vaoID;
         this->indexCount = indexCount;
         this->textureID = textureID;
         this->material = material;
     }
 
-    ModelComponent::ModelComponent(GLuint vaoID, int indexCount, GLuint textureID) {
+    ModelPart::ModelPart(GLuint vaoID, int indexCount, GLuint textureID) {
         this->vaoID = vaoID;
         this->indexCount = indexCount;
         this->textureID = textureID;
     }
 
-    ModelComponent::ModelComponent() {
+    ModelPart::ModelPart() {
         this->vaoID = -1;
         this->indexCount = -1;
         this->textureID = -1;
     }
 
-    int ModelComponent::getIndexCount() const {
+    int ModelPart::getIndexCount() const {
         return indexCount;
     }
 
-    GLuint ModelComponent::getVaoID() const {
+    GLuint ModelPart::getVaoID() const {
         return vaoID;
     }
 
-    GLuint ModelComponent::getTextureID() const {
+    GLuint ModelPart::getTextureID() const {
         return textureID;
     }
 
-    Material ModelComponent::getMaterial() const {
+    Material ModelPart::getMaterial() const {
         return material;
     }
 
-    Model::Model(std::vector<ModelComponent> components) {
-        this->components = components;
+    Model::Model(std::vector<ModelPart> parts) {
+        this->parts = parts;
 
         for(int i = 0; i < 3; ++i) {
             maxRanges.push_back(FLT_MAX);
@@ -66,11 +66,11 @@ namespace ore {
         }
     }
 
-    void Model::addModelComponent(ModelComponent component) {
-        components.push_back(component);
+    void Model::addModelPart(ModelPart part) {
+        parts.push_back(part);
     }
 
-    std::vector<ModelComponent>* Model::getModelComponents() {
-        return &components;
+    std::vector<ModelPart>* Model::getModelParts() {
+        return &parts;
     }
 }
