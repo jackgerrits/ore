@@ -4,6 +4,7 @@
 #define _USE_MATH_DEFINES
 
 #include <ore/Model.hpp>
+#include <ore/components/Component.hpp>
 
 #include <memory>
 #include <assert.h>
@@ -24,9 +25,20 @@ namespace ore {
         float yRot;
         float zRot;
 
+        std::map<int, Component*> components;
     public:
         Entity(std::shared_ptr<Model> model);
         Entity();
+
+        template<typename T>
+        void assignComponent(T* component);
+
+        template <typename T>
+        bool hasComponent();
+
+        template <typename T>
+        T getComponent();
+
 
         virtual bool update();
 
@@ -61,6 +73,26 @@ namespace ore {
         static glm::mat4 calculateModelMatrix(glm::vec3 position, glm::mat4 rotation, glm::vec3 scale);
         static glm::mat4 calculateRotationMatrix(float xRot, float yRot, float zRot);
     };
+
+    template<typename T>
+    void Entity::assignComponent(T* component){
+        static_assert(
+            std::is_base_of<Component, T>::value,
+            "T must be a descendant of Component"
+        );
+
+        components[componentId<component>()] = component;
+    }
+
+    template <typename T>
+    bool Entity::hasComponent() {
+        return components.count(componentId<T>()) > 0;
+    }
+
+    template <typename T>
+    T Entity::getComponent() {
+        return (T*)components[componentId<T>()];
+    }
 }
 
 #endif
