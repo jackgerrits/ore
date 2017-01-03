@@ -1,4 +1,4 @@
-#include <ore/shaders/ShaderProgram.h>
+#include <ore/shaders/ShaderProgram.hpp>
 
 ShaderProgram::ShaderProgram(std::string vertexShader, std::string fragmentShader){
     this->shaderID = loadShaders(vertexShader.c_str(), fragmentShader.c_str());
