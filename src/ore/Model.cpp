@@ -70,7 +70,7 @@ namespace ore {
         parts.push_back(part);
     }
 
-    std::vector<ModelPart>* Model::getModelParts() {
-        return &parts;
+    const std::vector<ModelPart>& Model::getModelParts() {
+        return parts;
     }
 }

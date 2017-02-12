@@ -42,7 +42,7 @@ namespace ore {
         Model(std::vector<ModelPart>);
         Model();
         void addModelPart(ModelPart);
-        std::vector<ModelPart>* getModelParts();
+        const std::vector<ModelPart>& getModelParts();
 
         void addRange(std::vector<float> vertices);
         std::pair<float, float> getRangeInDim(int dim);
