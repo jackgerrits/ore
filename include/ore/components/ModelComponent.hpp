@@ -10,8 +10,7 @@
 #include <vector>
 
 namespace ore {
-    class ModelComponent : public BaseComponent<ModelComponent> {
-    public:
+    struct ModelComponent : public BaseComponent<ModelComponent> {
         std::shared_ptr<Model> model;
 
         ModelComponent(std::shared_ptr<Model> model);
