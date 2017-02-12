@@ -1,5 +1,5 @@
-#ifndef ENTITY_H
-#define ENTITY_H
+#ifndef IMAGE_H
+#define IMAGE_H
 
 #include <ore/lib/stb_image.h>
 #include <glm/glm.hpp>
