@@ -7,6 +7,7 @@
 #include <ore/components/Component.hpp>
 
 #include <memory>
+#include <vector>
 #include <assert.h>
 #include <string>
 #include <iostream>
@@ -30,15 +31,30 @@ namespace ore {
         Entity(std::shared_ptr<Model> model);
         Entity();
 
+        template<typename T, typename... Args>
+        void assignComponents(T* component, Args... rest);
+
+        template<typename T>
+        void assignComponents(T* component);
+
         template<typename T>
         void assignComponent(T* component);
 
         template <typename T>
         bool hasComponent();
 
-        template <typename T>
-        T getComponent();
+        template<typename T, typename... Args>
+        bool hasComponents();
 
+        template<bool b = true>
+        bool hasComponents() {
+            return b;
+        }
+
+        template <typename T>
+        T* getComponent();
+
+        std::vector<Component*> getComponents();
 
         virtual bool update();
 
@@ -81,7 +97,7 @@ namespace ore {
             "T must be a descendant of Component"
         );
 
-        components[componentId<component>()] = component;
+        components[componentId<T>()] = component;
     }
 
     template <typename T>
@@ -89,9 +105,27 @@ namespace ore {
         return components.count(componentId<T>()) > 0;
     }
 
+    template<typename T, typename... Args>
+    bool Entity::hasComponents() {
+        return hasComponent<T>() && hasComponents<Args...>();
+    }
+
     template <typename T>
-    T Entity::getComponent() {
+    T* Entity::getComponent() {
         return (T*)components[componentId<T>()];
+    }
+
+    // TODO remove component
+
+    template<typename T, typename... Args>
+    void Entity::assignComponents(T* component, Args... rest) {
+        assignComponent(component);
+        assignComponents(rest...);
+    }
+
+    template<typename T>
+    void Entity::assignComponents(T* component) {
+        assignComponent(component);
     }
 }
 

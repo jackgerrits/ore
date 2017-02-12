@@ -23,6 +23,14 @@ namespace ore {
         zRot = 0.0f;
     }
 
+    std::vector<Component*> Entity::getComponents() {
+        std::vector<Component*> results;
+        for(auto const& kv : components) {
+            results.push_back(kv.second);
+        }
+        return results;
+    }
+
     bool Entity::update() {
         return false;
     }
