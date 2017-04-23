@@ -8,6 +8,7 @@
 
 #include <glm/ext.hpp>
 #include <vector>
+#include <memory>
 
 namespace ore {
     struct ModelComponent : public BaseComponent<ModelComponent> {

@@ -15,7 +15,12 @@ if(NOT GLEW_FOUND)
     message(ERROR " GLEW not found!")
 endif(NOT GLEW_FOUND)
 
-include_directories(${OPENGL_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS})
+find_package(GLUT)
+if(NOT GLUT_FOUND)
+    message(ERROR " GLUT not found. Ignore if values defined as arguments.")
+endif(NOT GLUT_FOUND)
+
+include_directories(${OPENGL_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS} ${GLUT_INCLUDE_DIR} ${GLM_INCLUDE_DIR})
 
 # Include source of project.
 include_directories(include)
@@ -25,4 +30,4 @@ file(GLOB_RECURSE SOURCES "src/*.cpp")
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
 
 # Link dependencies.
-target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES} ${GLEW_LIBRARY})
+target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES} ${GLEW_LIBRARY} ${GLUT_LIBRARIES})
