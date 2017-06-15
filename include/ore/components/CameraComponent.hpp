@@ -21,6 +21,10 @@ namespace ore {
 
         CameraComponent() {}
 
+        virtual std::string getType() const {
+            return "camera";
+        }
+
         // CameraComponent(glm::vec3 position, glm::vec3 focalPoint, glm::mat4 projection)
         //     : position(position), focalPoint(focalPoint), projection(projection) {}
     };

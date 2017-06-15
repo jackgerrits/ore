@@ -1,10 +1,13 @@
 #include <ore/systems/CameraSystem.hpp>
 
+#include <iostream>
+
 namespace ore {
     void CameraSystem::look(Entity* camera, glm::vec3 at) {
         glm::vec3 up(0.0f, 1.0f, 0.0f);
 
         CameraComponent* cameraComponent = camera->getComponent<CameraComponent>();
+std::cout << cameraComponent << std::endl;
         cameraComponent->view = glm::lookAt(cameraComponent->position, at, up);
         std::cout << glm::to_string(cameraComponent->view) << std::endl;
     }

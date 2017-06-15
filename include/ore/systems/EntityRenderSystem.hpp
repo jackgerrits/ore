@@ -11,7 +11,7 @@
 #include <ore/EntityManager.hpp>
 #include <ore/shaders/EntityShader.hpp>
 
-#include <glm/glm.hpp>
+
 #include <glm/ext.hpp>
 #include <vector>
 #include <map>
@@ -49,7 +49,7 @@ namespace ore {
             shader.enable();
             shader.loadProjection(camera->projection);
             shader.loadLights(entityManager->query<LightComponent>());
-            std::cout << entityManager->query<LightComponent>().size() << std::endl;
+            std::cout << "nums found: "<< entityManager->query<LightComponent>().size() << std::endl;
             for(auto l : entityManager->query<LightComponent>()) {
                 std::cout << glm::to_string(l->getPosition()) << std::endl;
                 // std::cout << l->getType() << std::endl;
@@ -82,6 +82,8 @@ namespace ore {
 
                         glDrawElements(GL_TRIANGLES, part.getIndexCount(), GL_UNSIGNED_INT, (void*)0);
                     }
+
+                    glBindVertexArray(0);
                 }
             }
 

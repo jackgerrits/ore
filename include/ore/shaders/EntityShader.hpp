@@ -20,8 +20,9 @@
 #include <GL/glew.h>
 
 namespace ore {
-    const std::string ENTITY_VERTEX_SHADER = "src/ore/shaders/entity.vert";
-    const std::string ENTITY_FRAGMENT_SHADER = "src/ore/shaders/entity.frag";
+    // TODO: Determine better way to reference shaders that isn't relative to current directory.
+    const std::string ENTITY_VERTEX_SHADER = "../ore/src/ore/shaders/entity.vert";
+    const std::string ENTITY_FRAGMENT_SHADER = "../ore/src/ore/shaders/entity.frag";
 
     class EntityShader : public ShaderProgram {
     public:

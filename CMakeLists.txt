@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.6.2)
 project(ore)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Find OpenGL dependencies on system.
@@ -31,3 +31,7 @@ add_library(${PROJECT_NAME} SHARED ${SOURCES})
 
 # Link dependencies.
 target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES} ${GLEW_LIBRARY} ${GLUT_LIBRARIES})
+
+file(GLOB_RECURSE TEST_SOURCES "test/*.cpp")
+add_executable(ore_Test ${TEST_SOURCES})
+target_link_libraries(ore_Test ${PROJECT_NAME} ${OPENGL_LIBRARIES} ${GLEW_LIBRARY} ${GLUT_LIBRARIES})

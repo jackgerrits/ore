@@ -1,5 +1,9 @@
 #include <ore/shaders/EntityShader.hpp>
 
+#include <iostream>
+#include <glm/ext.hpp>
+#include <glm/glm.hpp>
+
 namespace ore {
     EntityShader::EntityShader(): ShaderProgram(ENTITY_VERTEX_SHADER, ENTITY_FRAGMENT_SHADER) {
         bindUniformLocations();

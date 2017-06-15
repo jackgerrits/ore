@@ -105,7 +105,7 @@ bool ShaderProgram::compileShader(const char *shaderPath, const GLuint shaderID)
     }
 
     // Compile Shader
-    char const *SourcePointer = contentsOptional.first.c_str();
+    char const * SourcePointer = contentsOptional.first.c_str();
     glShaderSource(shaderID, 1, &SourcePointer , NULL);
     glCompileShader(shaderID);
 

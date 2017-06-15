@@ -16,6 +16,10 @@ namespace ore {
         float radius;           // Radius used for attenuation
         float coneAngle;        // Angle and direction of cone for spotlights
         glm::vec3 coneDirection;
+
+        virtual std::string getType() const {
+            return "light";
+        }
     };
 }
 

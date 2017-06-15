@@ -8,16 +8,20 @@
 namespace ore {
 
     // Generates a unique integer for each different type that it is called with.
-    static int currentComponentId = 0;
+    extern int currentComponentId;
     template <typename T>
     int componentId() {
-        static int id = currentComponentId++;
+        static int id = ++currentComponentId;
         return id;
     }
 
     // Base abstract component to be used in Entity.
     struct Component {
         virtual int getId() = 0;
+
+        virtual std::string getType() const {
+            return "unset";
+        }
     };
 
     // All components must inherit from BaseComponent to

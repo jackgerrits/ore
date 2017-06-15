@@ -18,6 +18,10 @@ namespace ore {
         {}
 
         std::shared_ptr<Model> model;
+
+        virtual std::string getType() const {
+            return "model";
+        }
     };
 }
 
