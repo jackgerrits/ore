@@ -11,15 +11,14 @@
 #include <memory>
 
 namespace ore {
-    struct ModelComponent : public BaseComponent<ModelComponent> {
+     class ModelComponent : public BaseComponent<ModelComponent> {
+    public:
+        ModelComponent(std::shared_ptr<Model> model) :
+            model(model)
+        {}
+
         std::shared_ptr<Model> model;
-
-        ModelComponent(std::shared_ptr<Model> model);
     };
-
-    ModelComponent::ModelComponent(std::shared_ptr<Model> model) {
-        this->model = model;
-    }
 }
 
 #endif

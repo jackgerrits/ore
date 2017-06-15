@@ -15,14 +15,12 @@ namespace ore {
         glm::vec3 scale;
         glm::vec3 rotation;
 
-        Position3DComponent();
+        Position3DComponent() :
+            position(glm::vec3(0.0f, 0.0f, 0.0f)),
+            scale(glm::vec3(1.0f, 1.0f, 1.0f)),
+            rotation(glm::vec3(0.0f, 0.0f, 0.0f))
+        {}
     };
-
-    Position3DComponent::Position3DComponent() {
-        position = glm::vec3(0.0f, 0.0f, 0.0f);
-        scale = glm::vec3(1.0f, 1.0f, 1.0f);
-        rotation = glm::vec3(0.0f, 0.0f, 0.0f);
-    }
 }
 
 #endif

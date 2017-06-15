@@ -3,6 +3,8 @@
 
 #define _USE_MATH_DEFINES
 
+#include <string>
+
 namespace ore {
 
     // Generates a unique integer for each different type that it is called with.

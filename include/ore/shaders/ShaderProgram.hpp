@@ -17,13 +17,6 @@
 
 // Abstract shader program class, holds all uniforms.
 class ShaderProgram {
-protected:
-    GLuint shaderID;
-
-private:
-    std::pair<std::string, bool> readFile(const char* filePath);
-    bool compileShader(const char* shaderPath, const GLuint shaderID);
-    GLuint loadShaders(const char* vertex_file_path, const char* fragment_file_path);
 public:
     ShaderProgram(std::string, std::string);
     ShaderProgram(int);
@@ -46,12 +39,20 @@ public:
     void loadUniformValue(GLuint uniformLocation, float* value, int count);
 
     GLuint getShaderID();
+
+protected:
+    GLuint shaderID;
+
+private:
+    std::pair<std::string, bool> readFile(const char* filePath);
+    bool compileShader(const char* shaderPath, const GLuint shaderID);
+    GLuint loadShaders(const char* vertex_file_path, const char* fragment_file_path);
 };
 
 
 // Should generalise this to take 'lights' as a paramter
 template <typename T>
-void ShaderProgram::loadLightUniform(std::string property, int index, const T& value){
+void ShaderProgram::loadLightUniform(std::string property, int index, const T& value) {
     // Lights are passed as an array of structs. However these are essentially bound and send individually.
     // They have special uniform name syntax though. ie uniform_name[i].property -> lights[0].position
     std::ostringstream ss;

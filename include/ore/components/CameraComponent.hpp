@@ -19,9 +19,7 @@ namespace ore {
         glm::mat4 view;
         glm::mat4 projection;
 
-        CameraComponent() {
-
-        }
+        CameraComponent() {}
 
         // CameraComponent(glm::vec3 position, glm::vec3 focalPoint, glm::mat4 projection)
         //     : position(position), focalPoint(focalPoint), projection(projection) {}

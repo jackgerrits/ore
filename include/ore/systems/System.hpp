@@ -13,8 +13,7 @@
 namespace ore {
     class System {
     public:
-        System() {
-        }
+        System() {}
 
         // Systems will always be given a list of all components that fullfil the requirements.
         virtual void process(EntityManager* entityManager) = 0;

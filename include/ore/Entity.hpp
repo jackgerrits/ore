@@ -17,16 +17,6 @@
 namespace ore {
 
     class Entity {
-    protected:
-        std::shared_ptr<Model> model;
-
-        glm::vec3 position;
-        glm::vec3 scale;
-        float xRot;
-        float yRot;
-        float zRot;
-
-        std::map<int, Component*> components;
     public:
         Entity(std::shared_ptr<Model> model);
         Entity();
@@ -88,10 +78,21 @@ namespace ore {
         // Generates the transformation to be applied to the mesh with the given parameters.
         static glm::mat4 calculateModelMatrix(glm::vec3 position, glm::mat4 rotation, glm::vec3 scale);
         static glm::mat4 calculateRotationMatrix(float xRot, float yRot, float zRot);
+
+    protected:
+        std::shared_ptr<Model> model;
+
+        glm::vec3 position;
+        glm::vec3 scale;
+        float xRot;
+        float yRot;
+        float zRot;
+
+        std::map<int, Component*> components;
     };
 
     template<typename T>
-    void Entity::assignComponent(T* component){
+    void Entity::assignComponent(T* component) {
         static_assert(
             std::is_base_of<Component, T>::value,
             "T must be a descendant of Component"

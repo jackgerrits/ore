@@ -15,8 +15,6 @@
 namespace ore {
     // TODO: Add input system to this
     class CameraSystem : public System {
-    private:
-
     public:
         virtual void process(EntityManager* entityManager) {
             // Do something with input.
@@ -24,6 +22,8 @@ namespace ore {
 
         void look(Entity* camera, glm::vec3 at);
         void look(Entity* camera, glm::vec3 from, glm::vec3 at);
+    private:
+
     };
 }
 

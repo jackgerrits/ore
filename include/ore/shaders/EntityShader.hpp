@@ -24,6 +24,20 @@ namespace ore {
     const std::string ENTITY_FRAGMENT_SHADER = "src/ore/shaders/entity.frag";
 
     class EntityShader : public ShaderProgram {
+    public:
+        EntityShader();
+
+        virtual void bindUniformLocations();
+
+        void loadLights(std::vector<Entity*> lights);
+        void loadLight(Entity* light, int i);
+        void loadView(glm::mat4 view);
+        void loadEntity(Entity* entity);
+        void loadModelPart(const ModelPart& component);
+        void loadProjection(glm::mat4 proj);
+    //     void loadDepth(glm::mat4 pv);
+    //     void loadClipPlane(glm::vec4 clip);
+
     private:
         GLuint location_texMap;
         GLuint location_cubeMap;
@@ -45,19 +59,6 @@ namespace ore {
 
         // GLuint location_depth_pv;
         // GLuint location_render_shadows;
-    public:
-        EntityShader();
-
-        virtual void bindUniformLocations();
-
-        void loadLights(std::vector<Entity*> lights);
-        void loadLight(Entity* light, int i);
-        void loadView(glm::mat4 view);
-        void loadEntity(Entity* entity);
-        void loadModelPart(const ModelPart& component);
-        void loadProjection(glm::mat4 proj);
-    //     void loadDepth(glm::mat4 pv);
-    //     void loadClipPlane(glm::vec4 clip);
     };
 }
 

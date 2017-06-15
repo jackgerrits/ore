@@ -21,8 +21,6 @@
 namespace ore {
     class EntityRenderSystem {
 
-    private:
-        EntityShader shader;
     public:
         std::map<Model*, std::vector<Entity*>> obtainModelEntityMapping(EntityManager* entityManager) {
             std::map<Model*, std::vector<Entity*>> modelMappings;
@@ -54,12 +52,13 @@ namespace ore {
             std::cout << entityManager->query<LightComponent>().size() << std::endl;
             for(auto l : entityManager->query<LightComponent>()) {
                 std::cout << glm::to_string(l->getPosition()) << std::endl;
+                // std::cout << l->getType() << std::endl;
+                std::cout << l->hasComponent<LightComponent>() << std::endl;
+
             }
             shader.loadView(camera->view);
 
-
             std::cout << ">>"<< entityManager->entities.size() << std::endl;
-
 
             // std::cout << glm::to_string(camera->view) << std::endl;
 
@@ -92,6 +91,9 @@ namespace ore {
             glBindVertexArray(0);
             shader.disable();
         }
+
+    private:
+        EntityShader shader;
     };
 }
 
