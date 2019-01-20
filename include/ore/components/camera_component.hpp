@@ -3,15 +3,15 @@
 
 #define _USE_MATH_DEFINES
 
-#include <ore/components/Component.hpp>
-#include <ore/Model.hpp>
+#include <ore/components/component.hpp>
+#include <ore/model.hpp>
 
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include <vector>
 
 namespace ore {
-    class CameraComponent : public BaseComponent<CameraComponent> {
+    class camera_component : public base_component<camera_component> {
     public:
         glm::vec3 position;
         glm::vec3 focalPoint;
@@ -19,7 +19,7 @@ namespace ore {
         glm::mat4 view;
         glm::mat4 projection;
 
-        CameraComponent() {}
+        camera_component() {}
 
         virtual std::string getType() const {
             return "camera";

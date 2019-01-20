@@ -2,36 +2,55 @@ cmake_minimum_required(VERSION 3.6.2)
 project(ore)
 
 set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Find OpenGL dependencies on system.
 find_package(OpenGL REQUIRED)
-if(NOT OPENGL_FOUND)
-    message(ERROR " OpenGL not found!")
-endif(NOT OPENGL_FOUND)
-
 find_package(GLEW REQUIRED)
-if(NOT GLEW_FOUND)
-    message(ERROR " GLEW not found!")
-endif(NOT GLEW_FOUND)
+find_package(GLUT REQUIRED)
+find_package(glm CONFIG REQUIRED)
 
-find_package(GLUT)
-if(NOT GLUT_FOUND)
-    message(ERROR " GLUT not found. Ignore if values defined as arguments.")
-endif(NOT GLUT_FOUND)
+# TODO move catch, stb_image and tiny_obj_loader to external dependencies
 
-include_directories(${OPENGL_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS} ${GLUT_INCLUDE_DIR} ${GLM_INCLUDE_DIR})
+set(ore_headers
+  include/ore/components/camera_component.hpp
+  include/ore/components/component.hpp
+  include/ore/components/light_component.hpp
+  include/ore/components/model_component.hpp
+  include/ore/components/position_3d_component.hpp
+  include/ore/entity_manager.hpp
+  include/ore/entity.hpp
+  include/ore/image.hpp
+  include/ore/loader.hpp
+  include/ore/material.hpp
+  include/ore/model.hpp
+  include/ore/shaders/entity_shader.hpp
+  include/ore/shaders/shader_program.hpp
+  include/ore/systems/camera_system.hpp
+  include/ore/systems/entity_render_system.hpp
+  include/ore/systems/system.hpp
+)
 
-# Include source of project.
-include_directories(include)
-file(GLOB_RECURSE SOURCES "src/*.cpp")
+set(ore_sources
+  src/components/component.cpp
+  src/entity.cpp
+  src/image.cpp
+  src/lib/stb_image.cpp
+  src/lib/tiny_obj_loader.cpp
+  src/loader.cpp
+  src/material.cpp
+  src/model.cpp
+  src/shaders/entity_shader.cpp
+  src/shaders/shader_program.cpp
+  src/systems/camera_system.cpp
+)
 
-# Compile project as a shared library.
-add_library(${PROJECT_NAME} SHARED ${SOURCES})
+add_library(ore ${ore_sources} ${ore_headers})
 
-# Link dependencies.
-target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES} ${GLEW_LIBRARY} ${GLUT_LIBRARIES})
+target_link_libraries(ore PUBLIC OpenGL::GL GLUT::GLUT GLEW::GLEW glm)
+target_include_directories(ore PUBLIC include)
 
-file(GLOB_RECURSE TEST_SOURCES "test/*.cpp")
-add_executable(ore_Test ${TEST_SOURCES})
-target_link_libraries(ore_Test ${PROJECT_NAME} ${OPENGL_LIBRARIES} ${GLEW_LIBRARY} ${GLUT_LIBRARIES})
+add_executable(ore_test
+  test/component_tests.cpp test/entity_manager_tests.cpp test/entity_tests.cpp
+  test/loader_tests.cpp test/main.cpp)
+target_link_libraries(ore_test ore)
+
+add_subdirectory(examples)

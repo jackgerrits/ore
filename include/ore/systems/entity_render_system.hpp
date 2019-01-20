@@ -7,12 +7,14 @@
 #include <ore/components/CameraComponent.hpp>
 #include <ore/components/Position3DComponent.hpp>
 #include <ore/components/LightComponent.hpp>
-#include <ore/Entity.hpp>
-#include <ore/EntityManager.hpp>
-#include <ore/shaders/EntityShader.hpp>
+#include <ore/entity.hpp>
+#include <ore/entity_manager.hpp>
+#include <ore/shaders/entity_shader.hpp>
 
 
 #include <glm/ext.hpp>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/string_cast.hpp>
 #include <vector>
 #include <map>
 #include <iostream>
@@ -22,14 +24,14 @@ namespace ore {
     class EntityRenderSystem {
 
     public:
-        std::map<Model*, std::vector<Entity*>> obtainModelEntityMapping(EntityManager* entityManager) {
-            std::map<Model*, std::vector<Entity*>> modelMappings;
+        std::map<model*, std::vector<entity*>> obtainModelEntityMapping(entity_manager* entityManager) {
+            std::map<model*, std::vector<entity*>> modelMappings;
 
             for(auto& entity : entityManager->query<Position3DComponent, ModelComponent>()) {
-                Model* model = entity->getComponent<ModelComponent>()->model.get();
+                model* model = entity->getComponent<ModelComponent>()->model.get();
 
                 if(modelMappings.count(model) == 0) {
-                    modelMappings[model] = std::vector<Entity*>();
+                    modelMappings[model] = std::vector<entity*>();
                 }
 
                 modelMappings[model].push_back(entity);
@@ -39,21 +41,21 @@ namespace ore {
         }
 
         // Render order. Sort models, load lights, render entities in groups by model.
-        virtual void process(EntityManager* entityManager) {
+        virtual void process(entity_manager* entityManager) {
 
             // Construct a map of models so that data only needs to be loaded once per pass.
             auto modelMappings = obtainModelEntityMapping(entityManager);
 
-            CameraComponent* camera = entityManager->query<CameraComponent>()[0]->getComponent<CameraComponent>();
+            camera_component* camera = entityManager->query<camera_component>()[0]->getComponent<camera_component>();
 
             shader.enable();
             shader.loadProjection(camera->projection);
-            shader.loadLights(entityManager->query<LightComponent>());
-            std::cout << "nums found: "<< entityManager->query<LightComponent>().size() << std::endl;
-            for(auto l : entityManager->query<LightComponent>()) {
+            shader.loadLights(entityManager->query<light_component>());
+            std::cout << "nums found: "<< entityManager->query<light_component>().size() << std::endl;
+            for(auto l : entityManager->query<light_component>()) {
                 std::cout << glm::to_string(l->getPosition()) << std::endl;
                 // std::cout << l->getType() << std::endl;
-                std::cout << l->hasComponent<LightComponent>() << std::endl;
+                std::cout << l->hasComponent<light_component>() << std::endl;
 
             }
             shader.loadView(camera->view);
@@ -95,7 +97,7 @@ namespace ore {
         }
 
     private:
-        EntityShader shader;
+        entity_shader shader;
     };
 }
 

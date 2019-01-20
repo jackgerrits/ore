@@ -15,34 +15,34 @@
 
 namespace ore {
     // Represents a single mesh/shape/vao
-    class ModelPart {
+    class model_part {
     private:
         GLuint vaoID;
         int indexCount;
-        Material material;
+        material material;
 
     public:
         GLuint textureID;
-        ModelPart(GLuint, int, GLuint, Material);
-        ModelPart(GLuint, int, GLuint);
-        ModelPart();
+        model_part(GLuint, int, GLuint, ore::material);
+        model_part(GLuint, int, GLuint);
+        model_part();
 
         int getIndexCount() const;
         GLuint getVaoID() const;
         GLuint getTextureID() const;
-        Material getMaterial() const;
+        ore::material getMaterial() const;
     };
 
     // Represents a grouping of meshes/shapes/vaos/ModelParts to form a larger object.
-    class Model {
+    class model {
     private:
-        std::vector<ModelPart> parts;
+        std::vector<model_part> parts;
         std::vector<float> maxRanges;   // Essentially forms a bounding box for the model. Format: [xMin, xMax, yMin, yMax, zMin, zMax]
     public:
-        Model(std::vector<ModelPart>);
-        Model();
-        void addModelPart(ModelPart);
-        const std::vector<ModelPart>& getModelParts();
+        model(std::vector<model_part>);
+        model();
+        void addModelPart(model_part);
+        const std::vector<model_part>& getModelParts();
 
         void addRange(std::vector<float> vertices);
         std::pair<float, float> getRangeInDim(int dim);

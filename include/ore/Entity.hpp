@@ -3,7 +3,7 @@
 
 #define _USE_MATH_DEFINES
 
-#include <ore/Model.hpp>
+#include <ore/model.hpp>
 #include <ore/components/Component.hpp>
 
 #include <memory>
@@ -16,10 +16,10 @@
 
 namespace ore {
 
-    class Entity {
+    class entity {
     public:
-        Entity(std::shared_ptr<Model> model);
-        Entity();
+        entity(std::shared_ptr<model> model);
+        entity();
 
         template<typename T, typename... Args>
         void assignComponents(T* component, Args... rest);
@@ -48,7 +48,7 @@ namespace ore {
 
         virtual bool update();
 
-        std::shared_ptr<Model> getModel() const;
+        std::shared_ptr<model> getModel() const;
         glm::mat4 getModelMatrix();
 
         glm::vec3 getPosition() const;
@@ -80,7 +80,7 @@ namespace ore {
         static glm::mat4 calculateRotationMatrix(float xRot, float yRot, float zRot);
 
     protected:
-        std::shared_ptr<Model> model;
+        std::shared_ptr<model> model;
 
         glm::vec3 position;
         glm::vec3 scale;
@@ -92,7 +92,7 @@ namespace ore {
     };
 
     template<typename T>
-    void Entity::assignComponent(T* component) {
+    void entity::assignComponent(T* component) {
         static_assert(
             std::is_base_of<Component, T>::value,
             "T must be a descendant of Component"
@@ -102,30 +102,30 @@ namespace ore {
     }
 
     template <typename T>
-    bool Entity::hasComponent() {
+    bool entity::hasComponent() {
         return components.count(componentId<T>()) > 0;
     }
 
     template<typename T, typename... Args>
-    bool Entity::hasComponents() {
+    bool entity::hasComponents() {
         return hasComponent<T>() && hasComponents<Args...>();
     }
 
     template <typename T>
-    T* Entity::getComponent() {
+    T* entity::getComponent() {
         return (T*)components[componentId<T>()];
     }
 
     // TODO remove component
 
     template<typename T, typename... Args>
-    void Entity::assignComponents(T* component, Args... rest) {
+    void entity::assignComponents(T* component, Args... rest) {
         assignComponent(component);
         assignComponents(rest...);
     }
 
     template<typename T>
-    void Entity::assignComponents(T* component) {
+    void entity::assignComponents(T* component) {
         assignComponent(component);
     }
 }

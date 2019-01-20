@@ -12,7 +12,7 @@ uniform mat4 view;
 // uniform mat4 depth_pv;
 // uniform vec4 clip_plane;
 
-// using named parameters for a test as defined in EntityShader.cpp
+// using named parameters for a test as defined in entity_shader.cpp
 in vec3 a_vertex;
 in vec3 a_normal;
 in vec2 a_tex_coord;

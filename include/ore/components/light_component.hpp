@@ -8,7 +8,7 @@
 #include <glm/ext.hpp>
 
 namespace ore {
-    struct LightComponent : public BaseComponent<LightComponent>{
+    struct light_component : public base_component<light_component>{
         glm::vec4 position;     // Position of the camera in world coordinates. w value of 0 indicates directional light, 1 indicates positional/point light
         glm::vec3 specular;     // Colour intensities of each light component
         glm::vec3 diffuse;

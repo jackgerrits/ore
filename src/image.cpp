@@ -1,20 +1,20 @@
-#include <ore/Image.hpp>
+#include <ore/image.hpp>
 
 namespace ore {
 
-    Image::Image()
+    image::image()
         : data(NULL), width(-1), height(-1), channels(-1) {
     }
 
-    Image::Image(unsigned char* data, int width, int height, int channels)
+    image::image(unsigned char* data, int width, int height, int channels)
         : data(data), width(width), height(height), channels(channels) {
     }
 
-    Image::~Image() {
+    image::~image() {
         stbi_image_free(this->data);
     }
 
-    glm::vec3 Image::getPixel(int x, int y) {
+    glm::vec3 image::getPixel(int x, int y) {
         if(x < 0 || x >= width || y < 0 || y >= height) {
             // Returns a vector of -1 to indicate the image does not contain a pixel at that location.
             return glm::vec3(-1.0f, -1.0f, -1.0f);

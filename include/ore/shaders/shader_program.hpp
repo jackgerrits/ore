@@ -16,10 +16,10 @@
 #include <GL/glew.h>
 
 // Abstract shader program class, holds all uniforms.
-class ShaderProgram {
+class shader_program {
 public:
-    ShaderProgram(std::string, std::string);
-    ShaderProgram(int);
+    shader_program(std::string, std::string);
+    shader_program(int);
     virtual void bindUniformLocations()=0;
     virtual void enable();
     virtual void disable();
@@ -52,7 +52,7 @@ private:
 
 // Should generalise this to take 'lights' as a paramter
 template <typename T>
-void ShaderProgram::loadLightUniform(std::string property, int index, const T& value) {
+void shader_program::loadLightUniform(std::string property, int index, const T& value) {
     // Lights are passed as an array of structs. However these are essentially bound and send individually.
     // They have special uniform name syntax though. ie uniform_name[i].property -> lights[0].position
     std::ostringstream ss;

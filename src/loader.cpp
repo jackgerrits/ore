@@ -1,14 +1,14 @@
-#include <ore/Loader.hpp>
+#include <ore/loader.hpp>
 
 #define VALS_PER_VERT 3
 #define VALS_PER_NORMAL 3
 #define VALS_PER_TEX 2
 
 namespace ore {
-    Loader::Loader() {}
+    loader::loader() {}
 
-    Loader& Loader::getLoader() {
-        static Loader instance;
+    loader& loader::getLoader() {
+        static loader instance;
         return instance;
     }
 
@@ -19,7 +19,7 @@ namespace ore {
                 vertices[pos+2]);
     }
 
-    std::vector<float> Loader::generateNormals(std::vector<float> vertices, std::vector<unsigned int> indices) {
+    std::vector<float> loader::generateNormals(std::vector<float> vertices, std::vector<unsigned int> indices) {
         std::vector<float> resultNormals(vertices.size(), 0.0f);
 
         // Iterate over each triangle as defined in indices
@@ -53,12 +53,12 @@ namespace ore {
     }
 
     // http://stackoverflow.com/questions/12774207/fastest-way-to-check-if-a-file-exist-using-standard-c-c11-c
-    inline bool Loader::fileExists(const std::string& name) {
+    inline bool loader::fileExists(const std::string& name) {
         struct stat buffer;
         return (stat (name.c_str(), &buffer) == 0);
     }
 
-    std::shared_ptr<Model> Loader::loadModel(std::string filepath) {
+    std::shared_ptr<model> loader::loadModel(std::string filepath) {
         // Declare containers for object values
         std::vector<tinyobj::shape_t> shapes;
         std::vector<tinyobj::material_t> materials;
@@ -87,65 +87,65 @@ namespace ore {
         return loadModel(shapes, materials, mtlPath);
     }
 
-    std::shared_ptr<Model> Loader::loadModel(std::vector<tinyobj::shape_t> shapes, std::vector<tinyobj::material_t> materials, std::string materialpath) {
-        Model* model = new Model();
+    std::shared_ptr<model> loader::loadModel(std::vector<tinyobj::shape_t> shapes, std::vector<tinyobj::material_t> materials, std::string materialpath) {
+        model* loaded_model = new model();
 
         for(size_t i = 0; i < shapes.size(); i++) {
-            ModelPart part = loadModelPart(shapes[i], materials, materialpath);
-            model->addRange(shapes[i].mesh.positions);
-            model->addModelPart(part);
+            model_part part = loadModelPart(shapes[i], materials, materialpath);
+            loaded_model->addRange(shapes[i].mesh.positions);
+            loaded_model->addModelPart(part);
         }
 
-        return std::shared_ptr<Model>(model);
+        return std::shared_ptr<model>(loaded_model);
     }
 
-    ModelPart Loader::loadModelPart(tinyobj::shape_t shape, std::vector<tinyobj::material_t> materials, std::string materialpath) {
+    model_part loader::loadModelPart(tinyobj::shape_t shape, std::vector<tinyobj::material_t> materials, std::string materialpath) {
         GLuint vao = loadVAO(shape);
         int numIndices = shape.mesh.indices.size();
 
         // TODO - revisit this. Likely a result of the file not loading on windows requiring this, meaning no textures can load.
-        Material material;
+        material mat;
         if (shape.mesh.material_ids.size() > 0 && shape.mesh.material_ids[0] != -1) {
-            material = Material(materials[shape.mesh.material_ids[0]]);
+            mat = material(materials[shape.mesh.material_ids[0]]);
         }
-        GLuint textureID = loadTexture(materialpath + material.diffuseTexture);
+        GLuint textureID = loadTexture(materialpath + mat.diffuseTexture);
 
-        return ModelPart(vao, numIndices, textureID, material);
+        return model_part(vao, numIndices, textureID, mat);
     }
 
-    ModelPart Loader::loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords) {
+    model_part loader::loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords) {
         GLuint vao = loadVAO(vertices, indices, texCoords);
         int numIndices = indices.size();
         GLuint textureID = loadDefaultTexture();
 
-        return ModelPart(vao, numIndices, textureID);
+        return model_part(vao, numIndices, textureID);
     }
 
-    ModelPart Loader::loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::vector<float> normals) {
+    model_part loader::loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::vector<float> normals) {
         GLuint vao = loadVAO(vertices, indices, texCoords, normals);
         int numIndices = indices.size();
         GLuint textureID = loadDefaultTexture();
 
-        return ModelPart(vao, numIndices, textureID);
+        return model_part(vao, numIndices, textureID);
     }
 
-    ModelPart Loader::loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::string texturepath) {
+    model_part loader::loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::string texturepath) {
         GLuint vao = loadVAO(vertices, indices, texCoords);
         int numIndices = indices.size();
         GLuint textureID = loadTexture(texturepath);
 
-        return ModelPart(vao, numIndices, textureID);
+        return model_part(vao, numIndices, textureID);
     }
 
-    ModelPart Loader::loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::vector<float> normals, std::string texturepath) {
+    model_part loader::loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::vector<float> normals, std::string texturepath) {
         GLuint vao = loadVAO(vertices, indices, texCoords, normals);
         int numIndices = indices.size();
         GLuint textureID = loadTexture(texturepath);
 
-        return ModelPart(vao, numIndices, textureID);
+        return model_part(vao, numIndices, textureID);
     }
 
-    GLuint Loader::loadVAO(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords) {
+    GLuint loader::loadVAO(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords) {
         GLuint vaoHandle;
         glGenVertexArrays(1, &vaoHandle);
         glBindVertexArray(vaoHandle);
@@ -162,7 +162,7 @@ namespace ore {
         return vaoHandle;
     }
 
-    GLuint Loader::loadVAO(std::vector<float> vertices, std::vector<unsigned int> indices) {
+    GLuint loader::loadVAO(std::vector<float> vertices, std::vector<unsigned int> indices) {
         GLuint vaoHandle;
         glGenVertexArrays(1, &vaoHandle);
         glBindVertexArray(vaoHandle);
@@ -178,7 +178,7 @@ namespace ore {
         return vaoHandle;
     }
 
-    GLuint Loader::loadVAO(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::vector<float> normals) {
+    GLuint loader::loadVAO(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::vector<float> normals) {
         GLuint vaoHandle;
         glGenVertexArrays(1, &vaoHandle);
         glBindVertexArray(vaoHandle);
@@ -196,7 +196,7 @@ namespace ore {
         return vaoHandle;
     }
 
-    GLuint Loader::setupBuffer(unsigned int buffer, std::vector<float> values, int attributeIndex, int dataDimension) {
+    GLuint loader::setupBuffer(unsigned int buffer, std::vector<float> values, int attributeIndex, int dataDimension) {
         glBindBuffer(GL_ARRAY_BUFFER, buffer);
         glBufferData(GL_ARRAY_BUFFER,
                      sizeof(float) * values.size(),
@@ -207,7 +207,7 @@ namespace ore {
         return buffer;
     }
 
-    GLuint Loader::setupIndicesBuffer(unsigned int buffer, std::vector<unsigned int> values) {
+    GLuint loader::setupIndicesBuffer(unsigned int buffer, std::vector<unsigned int> values) {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER,
                      sizeof(unsigned int) * values.size(),
@@ -216,7 +216,7 @@ namespace ore {
         return buffer;
     }
 
-    GLuint Loader::loadVAO(tinyobj::shape_t shape) {
+    GLuint loader::loadVAO(tinyobj::shape_t shape) {
         // If texcoords is null, set it to some dummy values
         if (shape.mesh.texcoords.size() == 0) {
             std::vector<float> texVec;
@@ -233,7 +233,7 @@ namespace ore {
             shape.mesh.normals);
     }
 
-    std::unique_ptr<Image> Loader::loadImage(std::string filepath) {
+    std::unique_ptr<image> loader::loadImage(std::string filepath) {
         int x, y, n;
         unsigned char *data = stbi_load(
             filepath.c_str(),   // char* filepath
@@ -243,12 +243,12 @@ namespace ore {
             0                   // Force number of channels if > 0
         );
 
-        return std::unique_ptr<Image>(new Image(data, x, y, n));
+        return std::make_unique<image>(data, x, y, n);
     }
 
-    GLuint Loader::loadCubemapTexture(std::vector<std::string> filenames) {
+    GLuint loader::loadCubemapTexture(std::vector<std::string> filenames) {
         if(filenames.size() != 6) {
-            std::cerr << "[Loader][Error] Cubemap requires 6 texture files." << std::endl;
+            std::cerr << "[loader][Error] Cubemap requires 6 texture files." << std::endl;
             exit(1);
         }
 
@@ -258,12 +258,12 @@ namespace ore {
         glBindTexture( GL_TEXTURE_CUBE_MAP, textureID );
 
         for(size_t i = 0; i < filenames.size(); i++) {
-            std::cout << "[Loader] loading: " << filenames[i] << std::endl;
+            std::cout << "[loader] loading: " << filenames[i] << std::endl;
             if (!fileExists(filenames[i])) {
-                std::cerr << "[Loader][Error] Skybox texture file " << i << " doesnt exist." << std::endl;
+                std::cerr << "[loader][Error] Skybox texture file " << i << " doesnt exist." << std::endl;
             }
 
-            std::unique_ptr<Image> image = loadImage(filenames[i]);
+            std::unique_ptr<image> image = loadImage(filenames[i]);
 
             GLenum format = GL_RGB;
             if(image->channels==4) {
@@ -281,20 +281,20 @@ namespace ore {
         return textureID;
     }
 
-    GLuint Loader::loadTexture(std::string filepath) {
+    GLuint loader::loadTexture(std::string filepath) {
         if (loadedTextures.count(filepath)) {
-            std::cout << "[Loader] '" << filepath << "' already loaded, using cached texture." << std::endl;
+            std::cout << "[loader] '" << filepath << "' already loaded, using cached texture." << std::endl;
             return loadedTextures[filepath];
         }
 
-        std::cout << "[Loader] loading: " << filepath << std::endl;
+        std::cout << "[loader] loading: " << filepath << std::endl;
         if (!fileExists(filepath)) {
-            std::cerr << "[Loader] File doesnt exist, loading default texture." << std::endl;
+            std::cerr << "[loader] File doesnt exist, loading default texture." << std::endl;
             return loadDefaultTexture();
         }
 
         // Load an image from file as texture
-        std::unique_ptr<Image> image = loadImage(filepath);
+        std::unique_ptr<image> image = loadImage(filepath);
 
         GLuint textureID = loadTextureData(image->data, image->width, image->height, image->channels, GL_TEXTURE0);
 
@@ -304,7 +304,7 @@ namespace ore {
         return textureID;
     }
 
-    GLuint Loader::loadTextureData(GLubyte *data, int x, int y, int n, GLenum textureUnit) {
+    GLuint loader::loadTextureData(GLubyte *data, int x, int y, int n, GLenum textureUnit) {
         GLuint textureID;
 
         glActiveTexture(textureUnit);
@@ -329,9 +329,9 @@ namespace ore {
         return textureID;
     }
 
-    GLuint Loader::loadDefaultTexture() {
+    GLuint loader::loadDefaultTexture() {
         if (loadedTextures.count("DEFAULT_TEXTURE")) {
-            std::cout << "[Loader] 'DEFAULT_TEXTURE' already loaded, using cached texture." << std::endl;
+            std::cout << "[loader] 'DEFAULT_TEXTURE' already loaded, using cached texture." << std::endl;
             return loadedTextures["DEFAULT_TEXTURE"];
         }
 

@@ -3,11 +3,11 @@
 
 #define _USE_MATH_DEFINES
 
-#include <ore/shaders/ShaderProgram.hpp>
-#include <ore/Entity.hpp>
-#include <ore/Model.hpp>
-#include <ore/components/LightComponent.hpp>
-#include <ore/components/CameraComponent.hpp>
+#include <ore/shaders/shader_program.hpp>
+#include <ore/entity.hpp>
+#include <ore/model.hpp>
+#include <ore/components/light_component.hpp>
+#include <ore/components/camera_component.hpp>
 
 #include <cstdio>
 #include <string>
@@ -24,17 +24,17 @@ namespace ore {
     const std::string ENTITY_VERTEX_SHADER = "../ore/src/ore/shaders/entity.vert";
     const std::string ENTITY_FRAGMENT_SHADER = "../ore/src/ore/shaders/entity.frag";
 
-    class EntityShader : public ShaderProgram {
+    class entity_shader : public shader_program {
     public:
-        EntityShader();
+        entity_shader();
 
         virtual void bindUniformLocations();
 
-        void loadLights(std::vector<Entity*> lights);
-        void loadLight(Entity* light, int i);
+        void loadLights(std::vector<entity*> lights);
+        void loadLight(entity* light, int i);
         void loadView(glm::mat4 view);
-        void loadEntity(Entity* entity);
-        void loadModelPart(const ModelPart& component);
+        void loadEntity(entity* entity);
+        void loadModelPart(const model_part& component);
         void loadProjection(glm::mat4 proj);
     //     void loadDepth(glm::mat4 pv);
     //     void loadClipPlane(glm::vec4 clip);

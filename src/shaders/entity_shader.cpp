@@ -1,15 +1,15 @@
-#include <ore/shaders/EntityShader.hpp>
+#include <ore/shaders/entity_shader.hpp>
 
 #include <iostream>
 #include <glm/ext.hpp>
 #include <glm/glm.hpp>
 
 namespace ore {
-    EntityShader::EntityShader(): ShaderProgram(ENTITY_VERTEX_SHADER, ENTITY_FRAGMENT_SHADER) {
+    entity_shader::entity_shader(): shader_program(ENTITY_VERTEX_SHADER, ENTITY_FRAGMENT_SHADER) {
         bindUniformLocations();
     }
 
-    void EntityShader::bindUniformLocations(){
+    void entity_shader::bindUniformLocations(){
         // Setup named attributes
         glBindAttribLocation(shaderID, 0, "a_vertex");
         glBindAttribLocation(shaderID, 1, "a_normal");
@@ -36,15 +36,15 @@ namespace ore {
         // location_render_shadows = glGetUniformLocation(shaderID, "render_shadows");
     }
 
-    void EntityShader::loadLights(std::vector<Entity*> lights){
+    void entity_shader::loadLights(std::vector<entity*> lights){
         loadUniformValue(location_num_lights, int(lights.size()));
         for(size_t i = 0; i < lights.size(); i++){
             loadLight(lights[i], i);
         }
     }
 
-    void EntityShader::loadLight(Entity* light, int i){
-        LightComponent* lightComponent = light->getComponent<LightComponent>();
+    void entity_shader::loadLight(entity* light, int i){
+        light_component* lightComponent = light->getComponent<light_component>();
 
         loadLightUniform("position", i, lightComponent->position);
         loadLightUniform("specular", i, lightComponent->specular);
@@ -55,12 +55,12 @@ namespace ore {
         loadLightUniform("coneDirection", i, lightComponent->coneDirection);
     }
 
-    void EntityShader::loadView(glm::mat4 view){
+    void entity_shader::loadView(glm::mat4 view){
         loadUniformValue(location_view, view);
         loadUniformValue(location_inv_view, glm::inverse(view));
     }
 
-    void EntityShader::loadEntity(Entity* entity){
+    void entity_shader::loadEntity(entity* entity){
         // loadUniformValue(location_texMap, 0);
         // loadUniformValue(location_cubeMap, 1);
         glm::mat4 model = entity->getModelMatrix();
@@ -68,7 +68,7 @@ namespace ore {
         loadUniformValue(location_model, model);
     }
 
-    void EntityShader::loadModelPart(const ModelPart& component){
+    void entity_shader::loadModelPart(const model_part& component){
         loadUniformValue(location_mtl_ambient, component.getMaterial().ambient.data(), 3);
         loadUniformValue(location_mtl_diffuse, component.getMaterial().diffuse.data(), 3);
         loadUniformValue(location_mtl_specular, component.getMaterial().specular.data(), 3);
@@ -76,16 +76,16 @@ namespace ore {
         loadUniformValue(location_shininess, component.getMaterial().shininess);
     }
 
-    void EntityShader::loadProjection(glm::mat4 proj){
+    void entity_shader::loadProjection(glm::mat4 proj){
         loadUniformValue(location_projection, proj);
         // loadUniformValue(location_render_shadows, 0);
     }
 
-    // void EntityShader::loadClipPlane(glm::vec4 clip){
+    // void entity_shader::loadClipPlane(glm::vec4 clip){
     //     loadUniformValue(location_clip_plane, clip);
     // }
 
-    // void EntityShader::loadDepth(glm::mat4 pv){
+    // void entity_shader::loadDepth(glm::mat4 pv){
     //     loadUniformValue(location_shadowMap, 2);
     //     loadUniformValue(location_depth_pv, pv);
     //     loadUniformValue(location_render_shadows, 1);

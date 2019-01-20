@@ -9,7 +9,7 @@
 #include <vector>
 
 namespace ore {
-    class Position3DComponent : public BaseComponent<Position3DComponent> {
+    class Position3DComponent : public base_component<Position3DComponent> {
     public:
         glm::vec3 position;
         glm::vec3 scale;

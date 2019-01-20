@@ -15,7 +15,7 @@ namespace ore {
         return id;
     }
 
-    // Base abstract component to be used in Entity.
+    // Base abstract component to be used in entity.
     struct Component {
         virtual int getId() = 0;
 
@@ -27,7 +27,7 @@ namespace ore {
     // All components must inherit from BaseComponent to
     // properly initialise the id.
     template <typename T>
-    struct BaseComponent : public Component {
+    struct base_component : public Component {
         static struct ThreadsafeId {
             int id;
             ThreadsafeId() { id = componentId<T>(); }
@@ -36,7 +36,7 @@ namespace ore {
     };
 
     template <typename T>
-    typename BaseComponent<T>::ThreadsafeId BaseComponent<T>::_;
+    typename base_component<T>::ThreadsafeId base_component<T>::_;
 }
 
 #endif

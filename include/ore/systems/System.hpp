@@ -3,9 +3,9 @@
 
 #define _USE_MATH_DEFINES
 
-#include <ore/components/Component.hpp>
-#include <ore/Entity.hpp>
-#include <ore/EntityManager.hpp>
+#include <ore/components/component.hpp>
+#include <ore/entity.hpp>
+#include <ore/entity_manager.hpp>
 
 #include <glm/ext.hpp>
 #include <vector>
@@ -16,7 +16,7 @@ namespace ore {
         System() {}
 
         // Systems will always be given a list of all components that fullfil the requirements.
-        virtual void process(EntityManager* entityManager) = 0;
+        virtual void process(entity_manager* entityManager) = 0;
     };
 }
 

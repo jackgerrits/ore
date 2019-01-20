@@ -3,7 +3,7 @@
 
 #define _USE_MATH_DEFINES
 
-#include <ore/Model.hpp>
+#include <ore/model.hpp>
 #include <ore/Image.hpp>
 #include <ore/lib/stb_image.h>
 #include <ore/lib/tiny_obj_loader.h>
@@ -19,9 +19,9 @@
 #include <glm/glm.hpp>
 
 namespace ore {
-    class Loader {
+    class loader {
     private:
-        Loader();
+        loader();
 
         // Stores the file/id mapping for each loaded texture to use for caching.
         std::map<std::string, GLuint> loadedTextures;
@@ -29,25 +29,25 @@ namespace ore {
         GLuint setupBuffer(unsigned int buffer, std::vector<float> values, int attributeIndex, int dataDimension);
         GLuint setupIndicesBuffer(unsigned int buffer, std::vector<unsigned int> values);
     public:
-        static Loader& getLoader();
+        static loader& getLoader();
 
         std::vector<float> generateNormals(std::vector<float> vertices, std::vector<unsigned int> indices);
 
         bool fileExists(const std::string& name);
-        std::shared_ptr<Model> loadModel(std::string filepath);
-        std::shared_ptr<Model> loadModel(std::vector<tinyobj::shape_t> shapes, std::vector<tinyobj::material_t> materials, std::string materialpath);
-        ModelPart loadModelPart(tinyobj::shape_t, std::vector<tinyobj::material_t> materials, std::string materialpath);
-        ModelPart loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords);
-        ModelPart loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::vector<float> normals);
-        ModelPart loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::string texturepath);
-        ModelPart loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::vector<float> normals, std::string texturepath);
+        std::shared_ptr<model> loadModel(std::string filepath);
+        std::shared_ptr<model> loadModel(std::vector<tinyobj::shape_t> shapes, std::vector<tinyobj::material_t> materials, std::string materialpath);
+        model_part loadModelPart(tinyobj::shape_t, std::vector<tinyobj::material_t> materials, std::string materialpath);
+        model_part loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords);
+        model_part loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::vector<float> normals);
+        model_part loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::string texturepath);
+        model_part loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::vector<float> normals, std::string texturepath);
 
         GLuint loadVAO(std::vector<float> vertices, std::vector<unsigned int> indices);
         GLuint loadVAO(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords);
         GLuint loadVAO(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::vector<float> normals);
         GLuint loadVAO(tinyobj::shape_t);
 
-        std::unique_ptr<Image> loadImage(std::string filepath);
+        std::unique_ptr<image> loadImage(std::string filepath);
         GLuint loadCubemapTexture(std::vector<std::string> filenames);
         GLuint loadTexture(std::string filepath);
         GLuint loadDefaultTexture();

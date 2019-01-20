@@ -6,7 +6,7 @@
 #include <array>
 
 namespace ore {
-    class Material {
+    class material {
     public:
         std::string name;
 
@@ -26,8 +26,8 @@ namespace ore {
         std::string displacementTexture;        // disp
         std::string alphaTexture;               // map_d
 
-        Material();
-        Material(tinyobj::material_t);
+        material();
+        material(tinyobj::material_t);
     };
 }
 

@@ -1,11 +1,12 @@
-#include <ore/Entity.hpp>
+#include <ore/entity.hpp>
+#include <ore/model.hpp>
 
 using namespace std;
 
 namespace ore {
 
     // Constructor accepts a model defining vertex, colour and index data for this entity.
-    Entity::Entity(shared_ptr<Model> model) {
+    entity::entity(shared_ptr<ore::model> model) {
         this->model = model;
 
         position = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -15,7 +16,7 @@ namespace ore {
         zRot = 0.0f;
     }
 
-    Entity::Entity() {
+    entity::entity() {
         position = glm::vec3(0.0f, 0.0f, 0.0f);
         scale = glm::vec3(1.0f, 1.0f, 1.0f);
         xRot = 0.0f;
@@ -23,7 +24,7 @@ namespace ore {
         zRot = 0.0f;
     }
 
-    std::vector<Component*> Entity::getComponents() {
+    std::vector<Component*> entity::getComponents() {
         std::vector<Component*> results;
         for(auto const& kv : components) {
             results.push_back(kv.second);
@@ -31,87 +32,87 @@ namespace ore {
         return results;
     }
 
-    bool Entity::update() {
+    bool entity::update() {
         return false;
     }
 
-    shared_ptr<Model> Entity::getModel() const {
+    shared_ptr<model> entity::getModel() const {
         return model;
     }
 
-    glm::mat4 Entity::getModelMatrix() {
+    glm::mat4 entity::getModelMatrix() {
         glm::mat4 rotation = calculateRotationMatrix(xRot, yRot, zRot);
         return calculateModelMatrix(position, rotation, scale);
     }
 
     // Getters and setters for entity state values.
-    glm::vec3 Entity::getPosition() const {
+    glm::vec3 entity::getPosition() const {
         return position;
     }
 
-    glm::vec3 Entity::getScale() const {
+    glm::vec3 entity::getScale() const {
         return scale;
     }
 
-    float Entity::getRotationX() const {
+    float entity::getRotationX() const {
         return xRot;
     }
 
-    float Entity::getRotationY() const {
+    float entity::getRotationY() const {
         return yRot;
     }
 
-    float Entity::getRotationZ() const {
+    float entity::getRotationZ() const {
         return zRot;
     }
 
-    glm::vec3 Entity::getDirectionVector() {
+    glm::vec3 entity::getDirectionVector() {
         return glm::normalize(glm::vec3(glm::sin(yRot), glm::sin(xRot), glm::cos(yRot)));
     }
 
-    void Entity::setPosition(glm::vec3 position) {
+    void entity::setPosition(glm::vec3 position) {
         this->position = position;
     }
 
-    void Entity::placeBottomEdge(float surfaceY) {
+    void entity::placeBottomEdge(float surfaceY) {
         if(model) {
             position.y = surfaceY - model->getRangeInDim(1).first * scale.y;
         }
     }
 
-    void Entity::setScale(glm::vec3 scale) {
+    void entity::setScale(glm::vec3 scale) {
         this->scale = scale;
     }
 
-    void Entity::setRotationX(float rot) {
+    void entity::setRotationX(float rot) {
         xRot = rot;
     }
 
-    void Entity::setRotationY(float rot) {
+    void entity::setRotationY(float rot) {
         yRot = rot;
     }
 
-    void Entity::setRotationZ(float rot) {
+    void entity::setRotationZ(float rot) {
         zRot = rot;
     }
     // Set the value of rotation or position relatively (Takes into account current value)
-    void Entity::rotateX(float rot) {
+    void entity::rotateX(float rot) {
         xRot += rot;
     }
 
-    void Entity::rotateY(float rot) {
+    void entity::rotateY(float rot) {
         yRot += rot;
     }
 
-    void Entity::rotateZ(float rot) {
+    void entity::rotateZ(float rot) {
         zRot += rot;
     }
 
-    void Entity::move(glm::vec3 movement) {
+    void entity::move(glm::vec3 movement) {
         position = position + movement;
     }
 
-    glm::mat4 Entity::calculateModelMatrix(glm::vec3 position, glm::mat4 rotationMat, glm::vec3 scale) {
+    glm::mat4 entity::calculateModelMatrix(glm::vec3 position, glm::mat4 rotationMat, glm::vec3 scale) {
         glm::mat4 modelMatrix(1.0f);
 
         // scale, rotate and translate
@@ -122,7 +123,7 @@ namespace ore {
         return modelMatrix;
     }
 
-    glm::mat4 Entity::calculateRotationMatrix(float xRot, float yRot, float zRot) {
+    glm::mat4 entity::calculateRotationMatrix(float xRot, float yRot, float zRot) {
         glm::mat4 rotation(1.0f);
 
         rotation = glm::rotate(rotation, yRot, glm::vec3(0.0f, 1.0f, 0.0f));

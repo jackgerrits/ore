@@ -1,7 +1,7 @@
 #include <ore/Material.hpp>
 
 namespace ore {
-    Material::Material() {
+    material::material() {
         name = "default";
         ambient.fill(1.f);
         diffuse.fill(1.f);
@@ -12,7 +12,7 @@ namespace ore {
         shininess = 0;
     }
 
-    Material::Material(tinyobj::material_t material) {
+    material::material(tinyobj::material_t material) {
         name = material.name;
         std::copy(std::begin(material.ambient), std::end(material.ambient), ambient.begin());
         std::copy(std::begin(material.diffuse), std::end(material.diffuse), diffuse.begin());
