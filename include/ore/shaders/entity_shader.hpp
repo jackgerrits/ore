@@ -19,10 +19,12 @@
 #include <glm/ext.hpp>
 #include <GL/glew.h>
 
+#include "base_dir.h"
+
 namespace ore {
     // TODO: Determine better way to reference shaders that isn't relative to current directory.
-    const std::string ENTITY_VERTEX_SHADER = "../ore/src/ore/shaders/entity.vert";
-    const std::string ENTITY_FRAGMENT_SHADER = "../ore/src/ore/shaders/entity.frag";
+    const std::string ENTITY_VERTEX_SHADER = PROJECT_DIR "src/shaders/entity.vert";
+    const std::string ENTITY_FRAGMENT_SHADER = PROJECT_DIR "src/shaders/entity.frag";
 
     class entity_shader : public shader_program {
     public:

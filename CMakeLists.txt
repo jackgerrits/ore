@@ -45,8 +45,9 @@ set(ore_sources
 
 add_library(ore ${ore_sources} ${ore_headers})
 
+configure_file(include/ore/base_dir.h.in base_dir.h)
 target_link_libraries(ore PUBLIC OpenGL::GL GLUT::GLUT GLEW::GLEW glm)
-target_include_directories(ore PUBLIC include)
+target_include_directories(ore PUBLIC include ${CMAKE_CURRENT_BINARY_DIR})
 
 add_executable(ore_test
   test/component_tests.cpp test/entity_manager_tests.cpp test/entity_tests.cpp

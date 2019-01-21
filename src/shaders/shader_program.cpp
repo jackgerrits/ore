@@ -100,8 +100,7 @@ bool shader_program::compileShader(const char *shaderPath, const GLuint shaderID
 
     // If it the file read was not successful.
     if(!contentsOptional.second) {
-        std::cerr << "Cannot open " << shaderPath << ". Are you in the right directory?" << std::endl;
-        return 0;
+      throw std::invalid_argument("Cannot open " + std::string(shaderPath) + ". Are you in the right directory?");
     }
 
     // Compile Shader

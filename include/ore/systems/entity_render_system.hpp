@@ -3,10 +3,10 @@
 
 #define _USE_MATH_DEFINES
 
-#include <ore/components/ModelComponent.hpp>
-#include <ore/components/CameraComponent.hpp>
-#include <ore/components/Position3DComponent.hpp>
-#include <ore/components/LightComponent.hpp>
+#include <ore/components/model_component.hpp>
+#include <ore/components/camera_component.hpp>
+#include <ore/components/position_3d_component.hpp>
+#include <ore/components/light_component.hpp>
 #include <ore/entity.hpp>
 #include <ore/entity_manager.hpp>
 #include <ore/shaders/entity_shader.hpp>
@@ -21,17 +21,17 @@
 
 
 namespace ore {
-    class EntityRenderSystem {
+    class entity_render_system {
 
     public:
         std::map<model*, std::vector<entity*>> obtainModelEntityMapping(entity_manager* entityManager) {
             std::map<model*, std::vector<entity*>> modelMappings;
 
-            for(auto& entity : entityManager->query<Position3DComponent, ModelComponent>()) {
+            for(auto& entity : entityManager->query<position_3d_component, ModelComponent>()) {
                 model* model = entity->getComponent<ModelComponent>()->model.get();
 
                 if(modelMappings.count(model) == 0) {
-                    modelMappings[model] = std::vector<entity*>();
+                    modelMappings[model] = std::vector<ore::entity*>();
                 }
 
                 modelMappings[model].push_back(entity);

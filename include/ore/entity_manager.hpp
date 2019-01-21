@@ -32,11 +32,11 @@ namespace ore {
 
         template<typename... Args>
         entity* newEntity(Args... components) {
-            entity* entity = new entity();
-            entity->assignComponents(components...);
-            entities.push_back(entity);
+            entity* new_entity = new entity();
+            new_entity->assignComponents(components...);
+            entities.push_back(new_entity);
 
-            return entity;
+            return new_entity;
         }
 
         entity* newEntity() {

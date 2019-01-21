@@ -79,9 +79,9 @@ namespace ore {
 
         // Load object
         std::string err;
-        bool ret = tinyobj::LoadObj(shapes, materials, err, filepath.c_str(), mtlPathChar);
-        if (!err.empty()) std::cerr << err << std::endl;
-        if (!ret) exit(1);
+        if (!tinyobj::LoadObj(shapes, materials, err, filepath.c_str(), mtlPathChar)) {
+          throw std::invalid_argument("Error while loading '" + filepath + "', Error: '" + err + "'");
+        }
 
         delete[] mtlPathChar;
         return loadModel(shapes, materials, mtlPath);

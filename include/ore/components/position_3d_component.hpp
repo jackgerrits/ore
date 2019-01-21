@@ -9,13 +9,13 @@
 #include <vector>
 
 namespace ore {
-    class Position3DComponent : public base_component<Position3DComponent> {
+    class position_3d_component : public base_component<position_3d_component> {
     public:
         glm::vec3 position;
         glm::vec3 scale;
         glm::vec3 rotation;
 
-        Position3DComponent() :
+        position_3d_component() :
             position(glm::vec3(0.0f, 0.0f, 0.0f)),
             scale(glm::vec3(1.0f, 1.0f, 1.0f)),
             rotation(glm::vec3(0.0f, 0.0f, 0.0f))

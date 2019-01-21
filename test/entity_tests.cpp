@@ -13,8 +13,8 @@ TEST_CASE("Can query and add components to entity") {
 
     CHECK(e.getComponents().size() == 0);
 
-    e.assignComponent(new Position3DComponent());
+    e.assignComponent(new position_3d_component());
     REQUIRE(e.getComponents().size() == 1);
-    REQUIRE(e.getComponent<Position3DComponent>() != nullptr);
+    REQUIRE(e.getComponent<position_3d_component>() != nullptr);
     REQUIRE(e.getComponent<light_component>() == nullptr);
 }
