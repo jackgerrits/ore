@@ -27,8 +27,8 @@ namespace ore {
         std::map<model*, std::vector<entity*>> obtainModelEntityMapping(entity_manager* entityManager) {
             std::map<model*, std::vector<entity*>> modelMappings;
 
-            for(auto& entity : entityManager->query<position_3d_component, ModelComponent>()) {
-                model* model = entity->getComponent<ModelComponent>()->model.get();
+            for(auto& entity : entityManager->query<position_3d_component, model_component>()) {
+                model* model = entity->getComponent<model_component>()->model.get();
 
                 if(modelMappings.count(model) == 0) {
                     modelMappings[model] = std::vector<ore::entity*>();

@@ -11,12 +11,12 @@
 #include <vector>
 
 namespace ore {
-    class System {
+    class system {
     public:
-        System() {}
+        system() {}
 
         // Systems will always be given a list of all components that fullfil the requirements.
-        virtual void process(entity_manager* entityManager) = 0;
+        virtual void process(entity_manager& entityManager) = 0;
     };
 }
 

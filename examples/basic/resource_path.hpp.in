@@ -1,0 +1,3 @@
+#pragma once
+
+#define BASIC_RES_DIR "@CMAKE_CURRENT_SOURCE_DIR@/"

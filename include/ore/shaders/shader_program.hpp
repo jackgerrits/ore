@@ -1,5 +1,4 @@
-#ifndef SHADERPROGRAM_H
-#define SHADERPROGRAM_H
+#pragma once
 
 #define _USE_MATH_DEFINES
 
@@ -20,12 +19,12 @@ class shader_program {
 public:
     shader_program(std::string, std::string);
     shader_program(int);
-    virtual void bindUniformLocations()=0;
+    virtual void bindUniformLocations() = 0;
     virtual void enable();
     virtual void disable();
 
     template <typename T>
-    void loadLightUniform(std::string property, int index,const T& value);
+    void loadLightUniform(std::string property, int index, const T& value);
 
     // Uniform loading helpers
     void loadUniformValue(GLuint uniformLocation, int value);
@@ -62,5 +61,3 @@ void shader_program::loadLightUniform(std::string property, int index, const T& 
     GLuint uniform_location = glGetUniformLocation(shaderID, uniformName.c_str());
     loadUniformValue(uniform_location, value);
 }
-
-#endif //SHADERPROGRAM_H

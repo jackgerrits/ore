@@ -11,9 +11,9 @@
 #include <memory>
 
 namespace ore {
-     class ModelComponent : public base_component<ModelComponent> {
+     class model_component : public base_component<model_component> {
     public:
-        ModelComponent(std::shared_ptr<model> model) :
+        model_component(std::shared_ptr<model> model) :
             model(model)
         {}
 

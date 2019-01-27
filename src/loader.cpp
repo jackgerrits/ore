@@ -202,7 +202,7 @@ namespace ore {
                      sizeof(float) * values.size(),
                      &values[0],
                      GL_STATIC_DRAW);
-        glVertexAttribPointer(attributeIndex, dataDimension, GL_FLOAT, GL_FALSE, 0, 0);
+		glVertexAttribPointer(attributeIndex, dataDimension, GL_FLOAT, GL_FALSE, 0, 0);
 
         return buffer;
     }
@@ -213,6 +213,9 @@ namespace ore {
                      sizeof(unsigned int) * values.size(),
                      &values[0],
                      GL_STATIC_DRAW);
+
+		glEnableVertexAttribArray(0);
+
         return buffer;
     }
 

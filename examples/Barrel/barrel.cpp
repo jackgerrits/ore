@@ -36,45 +36,52 @@ std::ostream& operator<< (std::ostream& out, const std::vector<T>& v) {
   return out;
 }
 
-GLFWwindow* initialise(){
-    GLFWwindow* window;
-    if (!glfwInit()) exit(1);
+GLFWwindow* initialise() {
+	if (!glfwInit()) {
+		throw std::runtime_error("glfwInit() failed");
+	}
 
-    // Specify that we want OpenGL 3.3
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	// Specify that we want OpenGL 3.3
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    // Create the window and OpenGL context
-    window = glfwCreateWindow(winX, winY, "Tester", NULL, NULL);
-    if (!window) {
-        glfwTerminate();
-        exit(1);
-    }
+	// Create the window and OpenGL context
+	GLFWwindow* window = glfwCreateWindow(winX, winY, "Basic Example", NULL, NULL);
+	if (!window) {
+		throw std::runtime_error("glfwCreateWindow() failed");
+	}
 
-    glfwMakeContextCurrent(window);
-    glfwSwapInterval(1);
-    // Initialize GLEW
-    glewExperimental = true; // Needed for core profile
-    assert(glewInit() == GLEW_OK);
-    glfwGetFramebufferSize(window, &winX, &winY);
+	glfwMakeContextCurrent(window);
+	glfwSwapInterval(1);
 
-    // Sets the (background) colour for each time the frame-buffer
-    // (colour buffer) is cleared
-    glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-    glEnable(GL_DEPTH_TEST);
+	// Initialize GLEW
+	glewExperimental = true; // Needed for core profile
+	if (glewInit() != GLEW_OK) {
+		throw std::runtime_error("glewInit() failed");
+	}
+
+	glfwGetFramebufferSize(window, &winX, &winY);
+
+	// Sets the (background) colour for each time the frame-buffer is cleared
+	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+
+	/*
+	glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	*/
 
-    return window;
+	return window;
 }
+
 
 int main() {
     GLFWwindow* window = initialise();
 
-    ore::entity_manager em;
+	ore::entity_manager em;
     ore::entity* e = em.newEntity(new ore::position_3d_component());
 
     ore::entity* camera = em.newEntity();
@@ -89,7 +96,7 @@ int main() {
 
     auto barrel = loader::getLoader().loadModel(BARREL_RES_DIR "/Barrel/Barrel02.obj");
 
-    e->assignComponent(new ModelComponent(barrel));
+    e->assignComponent(new model_component(barrel));
 
     light_component* lc = new light_component();
     lc->position = vec4(3.0f, 3.0f, 3.0f, 1.0f);
