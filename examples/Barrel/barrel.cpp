@@ -23,8 +23,8 @@ using namespace std;
 using namespace ore;
 using namespace glm;
 
-int winX = 640;
-int winY = 480;
+int winX = 1024;
+int winY = 768;
 
 template <typename T>
 std::ostream& operator<< (std::ostream& out, const std::vector<T>& v) {
@@ -67,12 +67,12 @@ GLFWwindow* initialise() {
 	// Sets the (background) colour for each time the frame-buffer is cleared
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 
-	/*
+	
 	glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	*/
+	
 
 	return window;
 }
@@ -92,18 +92,22 @@ int main() {
 
     cout << e->hasComponents<position_3d_component>() << endl;
     position_3d_component* p3d = e->getComponent<position_3d_component>();
-    p3d->position.z = 3;
+    p3d->position.z = 1;
+	e->setPosition({ 0.f, 0.f, 0.f});
+	e->setScale({ 10,10,10 });
 
     auto barrel = loader::getLoader().loadModel(BARREL_RES_DIR "/Barrel/Barrel02.obj");
 
     e->assignComponent(new model_component(barrel));
 
     light_component* lc = new light_component();
-    lc->position = vec4(3.0f, 3.0f, 3.0f, 1.0f);
+    //lc->position = vec4(3.0f, 3.0f, 3.0f, 1.0f);
     lc->specular = vec3(1.0f, 1.0f, 1.0f);
     lc->diffuse = vec3(0.7f, 0.7f, 0.7f);
     lc->ambient = vec3(0.1f, 0.1f, 0.1f);
+	lc->position = vec4{ 0.0f, 0.0f, -3.0f, 1.0f };
     light->assignComponent(lc);
+	
 
     camera_component* cc = new camera_component();
     cc->position = vec4(0.0f, 3.0f, 3.0f, 0.0f);
@@ -115,7 +119,7 @@ int main() {
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
-        ers.process(&em);
+        ers.process(em);
         glFlush();
 
         glfwSwapBuffers(window);

@@ -13,13 +13,13 @@ uniform mat4 view;
 // uniform vec4 clip_plane;
 
 // using named parameters for a test as defined in entity_shader.cpp
-in vec3 a_vertex;
-in vec3 a_normal;
-in vec2 a_tex_coord;
+layout(location = 0) in vec3 a_vertex;
+layout(location = 1) in vec3 a_normal;
+layout(location = 2) in vec2 a_tex_coord;
 
 out vec4 vertex; // vertex position in world space
 out vec3 normal; // the world space normal
-out vec4 shadowCoord; // shadow vertex position in world space
+// out vec4 shadowCoord; // shadow vertex position in world space
 out vec2 st;
 
 void main(void) {
@@ -29,5 +29,6 @@ void main(void) {
 
     // gl_ClipDistance[0] = dot(vertex, clip_plane);
     gl_Position = projection * view * vertex;
+    // gl_Position = projection * view * model * vec4(a_vertex, 1.0);
     // shadowCoord = depth_pv * vertex;
 }

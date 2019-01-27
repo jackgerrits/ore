@@ -197,13 +197,14 @@ namespace ore {
     }
 
     GLuint loader::setupBuffer(unsigned int buffer, std::vector<float> values, int attributeIndex, int dataDimension) {
+		glEnableVertexAttribArray(attributeIndex);
         glBindBuffer(GL_ARRAY_BUFFER, buffer);
         glBufferData(GL_ARRAY_BUFFER,
                      sizeof(float) * values.size(),
                      &values[0],
                      GL_STATIC_DRAW);
-		glVertexAttribPointer(attributeIndex, dataDimension, GL_FLOAT, GL_FALSE, 0, 0);
-
+		glVertexAttribPointer(attributeIndex, dataDimension, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		
         return buffer;
     }
 
@@ -213,9 +214,6 @@ namespace ore {
                      sizeof(unsigned int) * values.size(),
                      &values[0],
                      GL_STATIC_DRAW);
-
-		glEnableVertexAttribArray(0);
-
         return buffer;
     }
 

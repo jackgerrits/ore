@@ -118,6 +118,8 @@ bool shader_program::compileShader(const char *shaderPath, const GLuint shaderID
         char* ShaderErrorMessage = new char[infoLogLength+1];
         glGetShaderInfoLog(shaderID, infoLogLength, NULL, &ShaderErrorMessage[0]);
         std::cerr << &ShaderErrorMessage[0] << std::endl;
+		throw std::invalid_argument(ShaderErrorMessage);
+
 
         delete[] ShaderErrorMessage;
         return false;

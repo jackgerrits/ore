@@ -16,7 +16,7 @@ namespace ore {
     // TODO: Add input system to this
     class camera_system : public system {
     public:
-        virtual void process(entity_manager* entityManager) {
+        virtual void process(entity_manager& entityManager) {
             // Do something with input.
         }
 

@@ -11,9 +11,9 @@ namespace ore {
 
     void entity_shader::bindUniformLocations(){
         // Setup named attributes
-        glBindAttribLocation(shaderID, 0, "a_vertex");
+ /*       glBindAttribLocation(shaderID, 0, "a_vertex");
         glBindAttribLocation(shaderID, 1, "a_normal");
-        glBindAttribLocation(shaderID, 2, "a_tex_coord");
+        glBindAttribLocation(shaderID, 2, "a_tex_coord");*/
 
         location_texMap = glGetUniformLocation(shaderID, "texMap");
         location_cubeMap = glGetUniformLocation(shaderID, "cubeMap");
