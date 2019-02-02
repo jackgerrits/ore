@@ -55,14 +55,13 @@ namespace ore {
             shader.loadLights(entityManager.query<light_component>());
             std::cout << "nums found: "<< entityManager.query<light_component>().size() << std::endl;
             for(auto l : entityManager.query<light_component>()) {
-                std::cout << glm::to_string(l->getPosition()) << std::endl;
+                std::cout << "pos: " << glm::to_string(l->getPosition()) << std::endl;
+                //std::cout << "pos: " << glm::to_string(l->) << std::endl;
                 // std::cout << l->getType() << std::endl;
-                std::cout << l->hasComponent<light_component>() << std::endl;
 
             }
             shader.loadView(camera->view);
 
-            std::cout << ">>"<< entityManager.entities.size() << std::endl;
 
             // std::cout << glm::to_string(camera->view) << std::endl;
 /*

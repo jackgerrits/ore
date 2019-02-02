@@ -94,7 +94,7 @@ int main() {
     position_3d_component* p3d = e->getComponent<position_3d_component>();
     p3d->position.z = 1;
 	e->setPosition({ 0.f, 0.f, 0.f});
-	e->setScale({ 10,10,10 });
+	e->setScale({ 50,50,50 });
 
     auto barrel = loader::getLoader().loadModel(BARREL_RES_DIR "/Barrel/Barrel02.obj");
 
@@ -105,7 +105,8 @@ int main() {
     lc->specular = vec3(1.0f, 1.0f, 1.0f);
     lc->diffuse = vec3(0.7f, 0.7f, 0.7f);
     lc->ambient = vec3(0.1f, 0.1f, 0.1f);
-	lc->position = vec4{ 0.0f, 0.0f, -3.0f, 1.0f };
+	lc->position = vec4{ 10.0f, 10.0f, 2.0f, 1.0f };
+	lc->radius = 50.0f;
     light->assignComponent(lc);
 	
 

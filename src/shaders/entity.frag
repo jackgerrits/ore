@@ -116,8 +116,7 @@ vec3 ApplyLight(Light light, vec3 surfaceColor, vec3 normal, vec4 vertex_world, 
     vec3 r_world = vec3(inv_view * vec4(reflection, 0.0));
     vec3 specular = mtl_diffuse * texture(cubeMap, -r_world).rgb * light.specular * pow(specAngle, shininess);
 
-    // return emission + ambient + attenuation*(diffuse + specular);
-    return ambient;
+    return emission + ambient + attenuation*(diffuse + specular);
 }
 
 vec3 applyFog( in vec3  rgb,       // original color of the pixel
@@ -154,7 +153,7 @@ void main(void) {
         lit_colour += ApplyLight(lights[i], vec3(texture(texMap, st)), normal, vertex, vertex_view);
     }
 
-    lit_colour = vec3(vertex_view);
+    // lit_colour = vec3(texture(texMap, st));
 
     // lit_colour = lit_colour * visibility;
     // lit_colour = applyFog(lit_colour,-vertex_view.z);

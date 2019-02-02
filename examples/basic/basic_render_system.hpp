@@ -26,15 +26,15 @@ namespace ore {
             shader.enable();
             glEnableVertexAttribArray(0);
 
-			for (auto& entity : entityManager.query<model_component>()) {
-				auto model = entity->getComponent<model_component>()->model.get();
+            for (auto& entity : entityManager.query<model_component>()) {
+                auto model = entity->getComponent<model_component>()->model.get();
 
-				for (auto& part : model->getModelParts()) {
-					glBindVertexArray(part.getVaoID());
-					glDrawElements(GL_TRIANGLES, part.getIndexCount(), GL_UNSIGNED_INT, (void*)0);
-					glBindVertexArray(0);
-				}
-			}
+                for (auto& part : model->getModelParts()) {
+                    glBindVertexArray(part.getVaoID());
+                    glDrawElements(GL_TRIANGLES, part.getIndexCount(), GL_UNSIGNED_INT, (void*)0);
+                    glBindVertexArray(0);
+                }
+            }
 
             glDisableVertexAttribArray(0);
             shader.disable();
