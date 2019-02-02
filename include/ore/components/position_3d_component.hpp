@@ -25,7 +25,7 @@ namespace ore {
             rotation(glm::vec3(0.0f, 0.0f, 0.0f))
         {}
 
-        virtual std::string getType() const {
+        virtual std::string get_type() const {
             return "position";
         }
     };
@@ -34,20 +34,20 @@ namespace ore {
         // TODO implement
     }
 
-    inline glm::vec3 getDirectionVector(position_3d_component& p3d)	{
+    inline glm::vec3 get_direction_vector(position_3d_component& p3d)	{
         return glm::normalize(glm::vec3(glm::sin(p3d.yRot), glm::sin(p3d.xRot), glm::cos(p3d.yRot)));
     }
 
-    inline void placeBottomEdge(position_3d_component& p3d, float surfaceY) {
+    inline void place_bottom_edge(position_3d_component& p3d, float surfaceY) {
         // TODO implement
 
         /*	if (model) {
-                position.y = surfaceY - model->getRangeInDim(1).first * scale.y;
+                position.y = surfaceY - model->get_range_in_dim(1).first * scale.y;
             }*/
     }
 
 
-    inline glm::mat4 calculateRotationMatrix(position_3d_component& p3d) {
+    inline glm::mat4 calculate_rotation_matrix(position_3d_component& p3d) {
         glm::mat4 rotation(1.0f);
 
         rotation = glm::rotate(rotation, p3d.xRot, glm::vec3(0.0f, 1.0f, 0.0f));
@@ -57,10 +57,10 @@ namespace ore {
         return rotation;
     }
 
-    inline glm::mat4 calculateModelMatrix(position_3d_component& p3d) {
+    inline glm::mat4 calculate_model_matrix(position_3d_component& p3d) {
         glm::mat4 modelMatrix(1.0f);
 
-        auto rotation_matrix = calculateRotationMatrix(p3d);
+        auto rotation_matrix = calculate_rotation_matrix(p3d);
 
         // scale, rotate and translate
         modelMatrix = glm::translate(modelMatrix, p3d.position);

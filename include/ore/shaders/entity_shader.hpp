@@ -24,14 +24,14 @@ namespace ore {
     public:
         entity_shader();
 
-        virtual void bindUniformLocations();
+        virtual void bind_uniform_locations();
 
-        void loadLights(std::vector<entity*> lights);
-        void loadLight(entity* light, size_t i);
-        void loadView(glm::mat4 view);
-        void loadEntity(entity* entity);
-        void loadModelPart(const model_part& component);
-        void loadProjection(glm::mat4 proj);
+        void load_lights(std::vector<entity*> lights);
+        void load_light(entity* light, size_t i);
+        void load_view(glm::mat4 view);
+        void load_entity(entity* entity);
+        void load_model_part(const model_part& component);
+        void load_projection(glm::mat4 proj);
 
 	private:
         GLuint location_texMap;

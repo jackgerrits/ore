@@ -1,7 +1,5 @@
 #pragma once
 
-
-
 #include <ore/entity.hpp>
 
 #include <memory>
@@ -21,7 +19,7 @@ namespace ore {
         std::vector<entity*> query() {
             std::vector<entity*> found;
             for(auto entity : entities) {
-                if(entity->hasComponents<Args...>()) {
+                if(entity->has_components<Args...>()) {
                     found.push_back(entity);
                 }
             }
@@ -30,15 +28,15 @@ namespace ore {
         }
 
         template<typename... Args>
-        entity* newEntity(Args... components) {
+        entity* new_entity(Args... components) {
             entity* new_entity = new entity();
-            new_entity->assignComponents(components...);
+            new_entity->assign_components(components...);
             entities.push_back(new_entity);
 
             return new_entity;
         }
 
-        entity* newEntity() {
+        entity* new_entity() {
             entity* entity = new ore::entity();
             entities.push_back(entity);
 

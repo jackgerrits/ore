@@ -13,6 +13,6 @@ namespace ore {
         image();
         image(unsigned char* data, int width, int height, int channels);
         ~image();
-        glm::vec3 getPixel(int x, int y);
+        glm::vec3 get_pixel(int x, int y);
     };
 }

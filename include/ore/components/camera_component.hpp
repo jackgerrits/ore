@@ -20,7 +20,7 @@ namespace ore {
 
         camera_component() {}
 
-        virtual std::string getType() const {
+        virtual std::string get_type() const {
             return "camera";
         }
 

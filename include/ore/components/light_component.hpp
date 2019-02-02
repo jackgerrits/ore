@@ -16,7 +16,7 @@ namespace ore {
         float coneAngle;        // Angle and direction of cone for spotlights
         glm::vec3 coneDirection;
 
-        virtual std::string getType() const {
+        virtual std::string get_type() const {
             return "light";
         }
     };

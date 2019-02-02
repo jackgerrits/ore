@@ -10,9 +10,9 @@
 #include <GL/glew.h>
 
 namespace ore {
-    std::string readFileIntoString(const char* filePath);
-    void compileShader(const char* shaderPath, const GLuint shaderID);
-    GLuint loadShaders(const char* vertex_file_path, const char* fragment_file_path);
+    std::string read_file_into_string(const char* filePath);
+    void compile_shader(const char* shaderPath, const GLuint shaderID);
+    GLuint load_shaders(const char* vertex_file_path, const char* fragment_file_path);
 
     // Abstract shader program class, holds all uniforms.
     class shader_program {
@@ -20,14 +20,14 @@ namespace ore {
         shader_program(std::string, std::string);
         shader_program(int);
 
-        virtual void bindUniformLocations() = 0;
+        virtual void bind_uniform_locations() = 0;
         virtual void enable();
         virtual void disable();
 
-        GLuint getShaderID();
+        GLuint get_shader_id();
 
         template <typename T>
-        void loadLightUniform(std::string property, int index, const T& value);
+        void load_light_uniform(std::string property, int index, const T& value);
 
         // Uniform loading helpers
         static void loadUniformValue(GLuint uniformLocation, int value);
@@ -47,7 +47,7 @@ namespace ore {
 
     // TODO: Should generalise this to take 'lights' as a paramter
     template <typename T>
-    void shader_program::loadLightUniform(std::string property, int index, const T& value) {
+    void shader_program::load_light_uniform(std::string property, int index, const T& value) {
         // Lights are passed as an array of structs. However these are essentially bound and send individually.
         // They have special uniform name syntax though. ie uniform_name[i].property -> lights[0].position
         std::ostringstream ss;

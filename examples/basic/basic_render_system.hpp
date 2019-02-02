@@ -27,7 +27,7 @@ namespace ore {
             glEnableVertexAttribArray(0);
 
             for (auto& entity : entityManager.query<model_component>()) {
-                auto model = entity->getComponent<model_component>()->model.get();
+                auto model = entity->get_component<model_component>()->model.get();
 
                 for (auto& part : model->getModelParts()) {
                     glBindVertexArray(part.getVaoID());

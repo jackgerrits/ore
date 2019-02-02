@@ -11,10 +11,10 @@ using namespace ore;
 TEST_CASE("Can query and add components to entity") {
     entity e;
 
-    CHECK(e.getComponents().size() == 0);
+    CHECK(e.get_components().size() == 0);
 
-    e.assignComponent(new position_3d_component());
-    REQUIRE(e.getComponents().size() == 1);
-    REQUIRE(e.getComponent<position_3d_component>() != nullptr);
-    REQUIRE(e.getComponent<light_component>() == nullptr);
+    e.assign_component(new position_3d_component());
+    REQUIRE(e.get_components().size() == 1);
+    REQUIRE(e.get_component<position_3d_component>() != nullptr);
+    REQUIRE(e.get_component<light_component>() == nullptr);
 }

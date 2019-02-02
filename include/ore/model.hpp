@@ -26,10 +26,10 @@ namespace ore {
         model_part(GLuint, size_t, GLuint);
         model_part();
 
-        size_t getIndexCount() const;
-        GLuint getVaoID() const;
-        GLuint getTextureID() const;
-        ore::material getMaterial() const;
+        size_t get_index_count() const;
+        GLuint get_vao_id() const;
+        GLuint get_texture_id() const;
+        ore::material get_material() const;
     };
 
     // Represents a grouping of meshes/shapes/vaos/ModelParts to form a larger object.
@@ -40,10 +40,10 @@ namespace ore {
     public:
         model(std::vector<model_part>);
         model();
-        void addModelPart(model_part);
-        const std::vector<model_part>& getModelParts();
+        void add_model_part(model_part);
+        const std::vector<model_part>& get_model_parts();
 
-        void addRange(std::vector<float> vertices);
-        std::pair<float, float> getRangeInDim(int dim);
+        void add_range(std::vector<float> vertices);
+        std::pair<float, float> get_range_in_dim(int dim);
     };
 }

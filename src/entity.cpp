@@ -4,8 +4,8 @@
 using namespace std;
 
 namespace ore {
-    std::vector<Component*> entity::getComponents() {
-        std::vector<Component*> results;
+    std::vector<component*> entity::get_components() {
+        std::vector<component*> results;
         for (auto const& kv : components) {
             results.push_back(kv.second);
         }
