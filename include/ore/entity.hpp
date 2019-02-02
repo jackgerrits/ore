@@ -1,7 +1,5 @@
 #pragma once
 
-#define _USE_MATH_DEFINES
-
 #include <ore/components/Component.hpp>
 
 #include <memory>

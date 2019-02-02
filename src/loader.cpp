@@ -88,7 +88,7 @@ namespace ore {
     }
 
     std::shared_ptr<model> loader::loadModel(std::vector<tinyobj::shape_t> shapes, std::vector<tinyobj::material_t> materials, std::string materialpath) {
-        model* loaded_model = new model();
+        auto loaded_model = new model();
 
         for(size_t i = 0; i < shapes.size(); i++) {
             model_part part = loadModelPart(shapes[i], materials, materialpath);
@@ -100,47 +100,47 @@ namespace ore {
     }
 
     model_part loader::loadModelPart(tinyobj::shape_t shape, std::vector<tinyobj::material_t> materials, std::string materialpath) {
-        GLuint vao = loadVAO(shape);
-        int numIndices = shape.mesh.indices.size();
+        auto vao = loadVAO(shape);
+        auto numIndices = shape.mesh.indices.size();
 
         // TODO - revisit this. Likely a result of the file not loading on windows requiring this, meaning no textures can load.
         material mat;
         if (shape.mesh.material_ids.size() > 0 && shape.mesh.material_ids[0] != -1) {
             mat = material(materials[shape.mesh.material_ids[0]]);
         }
-        GLuint textureID = loadTexture(materialpath + mat.diffuseTexture);
+        auto textureID = loadTexture(materialpath + mat.diffuseTexture);
 
         return model_part(vao, numIndices, textureID, mat);
     }
 
     model_part loader::loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords) {
-        GLuint vao = loadVAO(vertices, indices, texCoords);
-        int numIndices = indices.size();
-        GLuint textureID = loadDefaultTexture();
+        auto vao = loadVAO(vertices, indices, texCoords);
+        auto numIndices = indices.size();
+        auto textureID = loadDefaultTexture();
 
         return model_part(vao, numIndices, textureID);
     }
 
     model_part loader::loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::vector<float> normals) {
-        GLuint vao = loadVAO(vertices, indices, texCoords, normals);
-        int numIndices = indices.size();
-        GLuint textureID = loadDefaultTexture();
+        auto vao = loadVAO(vertices, indices, texCoords, normals);
+        auto numIndices = indices.size();
+        auto textureID = loadDefaultTexture();
 
         return model_part(vao, numIndices, textureID);
     }
 
     model_part loader::loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::string texturepath) {
-        GLuint vao = loadVAO(vertices, indices, texCoords);
-        int numIndices = indices.size();
-        GLuint textureID = loadTexture(texturepath);
+        auto vao = loadVAO(vertices, indices, texCoords);
+        auto numIndices = indices.size();
+        auto textureID = loadTexture(texturepath);
 
         return model_part(vao, numIndices, textureID);
     }
 
     model_part loader::loadModelPart(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<float> texCoords, std::vector<float> normals, std::string texturepath) {
-        GLuint vao = loadVAO(vertices, indices, texCoords, normals);
-        int numIndices = indices.size();
-        GLuint textureID = loadTexture(texturepath);
+        auto vao = loadVAO(vertices, indices, texCoords, normals);
+        auto numIndices = indices.size();
+        auto textureID = loadTexture(texturepath);
 
         return model_part(vao, numIndices, textureID);
     }
@@ -236,7 +236,7 @@ namespace ore {
 
     std::unique_ptr<image> loader::loadImage(std::string filepath) {
         int x, y, n;
-        unsigned char *data = stbi_load(
+        unsigned char* data = stbi_load(
             filepath.c_str(),   // char* filepath
             &x,                 // The address to store the width of the image
             &y,                 // The address to store the height of the image
@@ -297,7 +297,7 @@ namespace ore {
         // Load an image from file as texture
         std::unique_ptr<image> image = loadImage(filepath);
 
-        GLuint textureID = loadTextureData(image->data, image->width, image->height, image->channels, GL_TEXTURE0);
+        auto textureID = loadTextureData(image->data, image->width, image->height, image->channels, GL_TEXTURE0);
 
         // Save texture to cache
         loadedTextures[filepath] = textureID;
@@ -314,7 +314,7 @@ namespace ore {
         GLenum format = GL_RGB;
 
         // If there are four channels include alpha
-        if(n==4) {
+        if(n == 4) {
             format = GL_RGBA;
         }
 

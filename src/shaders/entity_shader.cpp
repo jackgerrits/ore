@@ -1,6 +1,8 @@
 #include <ore/shaders/entity_shader.hpp>
 
 #include <ore/components/position_3d_component.hpp>
+#include <ore/components/light_component.hpp>
+#include <ore/components/camera_component.hpp>
 
 #include <iostream>
 #include <glm/ext.hpp>
@@ -35,7 +37,7 @@ namespace ore {
         }
     }
 
-    void entity_shader::loadLight(entity* light, int i){
+    void entity_shader::loadLight(entity* light, size_t i){
         light_component* lightComponent = light->getComponent<light_component>();
 
         loadLightUniform("position", i, lightComponent->position);

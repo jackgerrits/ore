@@ -1,6 +1,6 @@
 #pragma once
 
-#define _USE_MATH_DEFINES
+
 
 #include <ore/components/model_component.hpp>
 #include <ore/components/camera_component.hpp>

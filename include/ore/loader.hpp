@@ -1,6 +1,6 @@
 #pragma once
 
-#define _USE_MATH_DEFINES
+
 
 #include <ore/model.hpp>
 #include <ore/Image.hpp>

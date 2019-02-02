@@ -1,6 +1,6 @@
 #pragma once
 
-#define _USE_MATH_DEFINES
+
 
 #include <ore/Material.hpp>
 
@@ -17,16 +17,16 @@ namespace ore {
     class model_part {
     private:
         GLuint vaoID;
-        int indexCount;
+        size_t indexCount;
         material material;
 
     public:
         GLuint textureID;
-        model_part(GLuint, int, GLuint, ore::material);
-        model_part(GLuint, int, GLuint);
+        model_part(GLuint, size_t, GLuint, ore::material);
+        model_part(GLuint, size_t, GLuint);
         model_part();
 
-        int getIndexCount() const;
+        size_t getIndexCount() const;
         GLuint getVaoID() const;
         GLuint getTextureID() const;
         ore::material getMaterial() const;

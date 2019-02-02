@@ -1,3 +1,6 @@
+#define _USE_MATH_DEFINES
+#include <cmath>
+
 #include <ore/components/position_3d_component.hpp>
 #include <ore/components/light_component.hpp>
 #include <ore/components/model_component.hpp>
@@ -19,7 +22,6 @@
 
 #include "resource_path.h"
 
-using namespace std;
 using namespace ore;
 using namespace glm;
 

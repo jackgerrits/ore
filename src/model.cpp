@@ -2,14 +2,14 @@
 #include <ore/material.hpp>
 
 namespace ore {
-    model_part::model_part(GLuint vaoID, int indexCount, GLuint textureID, ore::material material) {
+    model_part::model_part(GLuint vaoID, size_t indexCount, GLuint textureID, ore::material material) {
         this->vaoID = vaoID;
         this->indexCount = indexCount;
         this->textureID = textureID;
         this->material = material;
     }
 
-    model_part::model_part(GLuint vaoID, int indexCount, GLuint textureID) {
+    model_part::model_part(GLuint vaoID, size_t indexCount, GLuint textureID) {
         this->vaoID = vaoID;
         this->indexCount = indexCount;
         this->textureID = textureID;
@@ -17,11 +17,11 @@ namespace ore {
 
     model_part::model_part() {
         this->vaoID = -1;
-        this->indexCount = -1;
+        this->indexCount = 0;
         this->textureID = -1;
     }
 
-    int model_part::getIndexCount() const {
+    size_t model_part::getIndexCount() const {
         return indexCount;
     }
 

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <ore/lib/tiny_obj_loader.h>
-
 #include <array>
 
 namespace ore {

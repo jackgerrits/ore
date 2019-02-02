@@ -1,17 +1,12 @@
 #pragma once
 
-#define _USE_MATH_DEFINES
-
 #include <ore/shaders/shader_program.hpp>
 #include <ore/entity.hpp>
 #include <ore/model.hpp>
-#include <ore/components/light_component.hpp>
-#include <ore/components/camera_component.hpp>
 
 #include <cstdio>
 #include <string>
 #include <vector>
-#include <iostream>
 #include <fstream>
 
 #include <glm/glm.hpp>
@@ -32,19 +27,15 @@ namespace ore {
         virtual void bindUniformLocations();
 
         void loadLights(std::vector<entity*> lights);
-        void loadLight(entity* light, int i);
+        void loadLight(entity* light, size_t i);
         void loadView(glm::mat4 view);
         void loadEntity(entity* entity);
         void loadModelPart(const model_part& component);
         void loadProjection(glm::mat4 proj);
-    //     void loadDepth(glm::mat4 pv);
-    //     void loadClipPlane(glm::vec4 clip);
 
-    private:
+	private:
         GLuint location_texMap;
         GLuint location_cubeMap;
-        // GLuint location_shadowMap;
-        // GLuint location_clip_plane;
 
         GLuint location_projection;
         GLuint location_model;
@@ -58,8 +49,5 @@ namespace ore {
         GLuint location_mtl_ambient;
         GLuint location_mtl_diffuse;
         GLuint location_mtl_specular;
-
-        // GLuint location_depth_pv;
-        // GLuint location_render_shadows;
     };
 }
