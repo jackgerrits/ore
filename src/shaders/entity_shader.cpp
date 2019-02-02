@@ -54,12 +54,12 @@ namespace ore {
 
     void entity_shader::loadEntity(entity* entity){
         loadUniformValue(location_texMap, 0);
-		glm::mat4 model = ore::calculateModelMatrix(*entity->getComponent<position_3d_component>());
+        glm::mat4 model = ore::calculateModelMatrix(*entity->getComponent<position_3d_component>());
         loadUniformValue(location_model, model);
     }
 
     void entity_shader::loadModelPart(const model_part& component){
-		loadUniformValue(location_texMap, component.getTextureID());
+        loadUniformValue(location_texMap, component.getTextureID());
         loadUniformValue(location_mtl_ambient, component.getMaterial().ambient.data(), 3);
         loadUniformValue(location_mtl_diffuse, component.getMaterial().diffuse.data(), 3);
         loadUniformValue(location_mtl_specular, component.getMaterial().specular.data(), 3);

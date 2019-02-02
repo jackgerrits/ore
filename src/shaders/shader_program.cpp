@@ -79,7 +79,7 @@ void shader_program::loadUniformValue(GLuint uniformLocation, float* value, int 
             glUniform4fv(uniformLocation, 1, value);
             break;
         default:
-			throw std::runtime_error("Cant load uniform with " + std::to_string(count) + " dimensions.");
+            throw std::runtime_error("Cant load uniform with " + std::to_string(count) + " dimensions.");
     }
 }
 
