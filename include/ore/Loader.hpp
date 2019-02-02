@@ -1,5 +1,4 @@
-#ifndef LOADER_H
-#define LOADER_H
+#pragma once
 
 #define _USE_MATH_DEFINES
 
@@ -53,5 +52,3 @@ namespace ore {
         GLuint loadDefaultTexture();
     };
 }
-
-#endif

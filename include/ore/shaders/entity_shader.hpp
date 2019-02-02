@@ -1,5 +1,4 @@
-#ifndef ENTITYSHADER_H
-#define ENTITYSHADER_H
+#pragma once
 
 #define _USE_MATH_DEFINES
 
@@ -64,6 +63,3 @@ namespace ore {
         // GLuint location_render_shadows;
     };
 }
-
-#endif //ENTITYSHADER_H
-

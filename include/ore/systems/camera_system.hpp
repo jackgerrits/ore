@@ -1,5 +1,4 @@
-#ifndef CAMERA_SYSTEM_H
-#define CAMERA_SYSTEM_H
+#pragma once
 
 #define _USE_MATH_DEFINES
 
@@ -26,5 +25,3 @@ namespace ore {
 
     };
 }
-
-#endif

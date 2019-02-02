@@ -1,5 +1,4 @@
-#ifndef MATERIAL_H
-#define MATERIAL_H
+#pragma once
 
 #include <ore/lib/tiny_obj_loader.h>
 
@@ -30,5 +29,3 @@ namespace ore {
         material(tinyobj::material_t);
     };
 }
-
-#endif

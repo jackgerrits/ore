@@ -1,5 +1,4 @@
-#ifndef SYSTEM_H
-#define SYSTEM_H
+#pragma once
 
 #define _USE_MATH_DEFINES
 
@@ -19,5 +18,3 @@ namespace ore {
         virtual void process(entity_manager& entityManager) = 0;
     };
 }
-
-#endif

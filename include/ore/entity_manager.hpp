@@ -1,5 +1,4 @@
-#ifndef ENTITY_MANAGER_H
-#define ENTITY_MANAGER_H
+#pragma once
 
 #define _USE_MATH_DEFINES
 
@@ -51,5 +50,3 @@ namespace ore {
         }
     };
 }
-
-#endif

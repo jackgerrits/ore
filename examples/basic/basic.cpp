@@ -21,8 +21,6 @@
 #include "resource_path.h"
 #include "basic_render_system.hpp"
 
-#include "basic_shader.hpp"
-
 using namespace std;
 using namespace ore;
 using namespace glm;
@@ -31,9 +29,9 @@ int winX = 1024;
 int winY = 768;
 
 GLFWwindow* initialise(){
-	if (!glfwInit()) {
-		throw std::runtime_error("glfwInit() failed");
-	}
+    if (!glfwInit()) {
+        throw std::runtime_error("glfwInit() failed");
+    }
 
     // Specify that we want OpenGL 3.3
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -42,9 +40,9 @@ GLFWwindow* initialise(){
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Create the window and OpenGL context
-	GLFWwindow* window = glfwCreateWindow(winX, winY, "Basic Example", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(winX, winY, "Basic Example", NULL, NULL);
     if (!window) {
-		throw std::runtime_error("glfwCreateWindow() failed");
+        throw std::runtime_error("glfwCreateWindow() failed");
     }
 
     glfwMakeContextCurrent(window);
@@ -52,9 +50,9 @@ GLFWwindow* initialise(){
 
     // Initialize GLEW
     glewExperimental = true; // Needed for core profile
-	if (glewInit() != GLEW_OK) {
-		throw std::runtime_error("glewInit() failed");
-	}
+    if (glewInit() != GLEW_OK) {
+        throw std::runtime_error("glewInit() failed");
+    }
 
     glfwGetFramebufferSize(window, &winX, &winY);
 
@@ -70,30 +68,30 @@ int main() {
     ore::entity_manager em;
     auto e = em.newEntity();
 
-	std::vector<float> vertices = {
-		 0.5f,  0.5f, 0.0f,  // top right
-		 0.5f, -0.5f, 0.0f,  // bottom right
-		-0.5f, -0.5f, 0.0f,  // bottom left
-		-0.5f,  0.5f, 0.0f   // top left 
-	};
+    std::vector<float> vertices = {
+         0.5f,  0.5f, 0.0f,  // top right
+         0.5f, -0.5f, 0.0f,  // bottom right
+        -0.5f, -0.5f, 0.0f,  // bottom left
+        -0.5f,  0.5f, 0.0f   // top left
+    };
 
-	std::vector<unsigned int> indices = {
-		0, 1, 3,   // first triangle
-		1, 2, 3    // second triangle
-	};
+    std::vector<unsigned int> indices = {
+        0, 1, 3,   // first triangle
+        1, 2, 3    // second triangle
+    };
 
-	auto vao = loader::getLoader().loadVAO(vertices, indices);
+    auto vao = loader::getLoader().loadVAO(vertices, indices);
     auto m = std::make_shared<ore::model>();
     m->addModelPart(model_part(vao, indices.size(), 0));
     e->assignComponent(new model_component(m));
 
     basic_render_system brs;
-	
+
     // Main logic/render loop.
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
 
-		// Prcoess the entities with the render system.
+        // Prcoess the entities with the render system.
         brs.process(em);
 
         glFlush();

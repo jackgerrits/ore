@@ -1,5 +1,4 @@
-#ifndef MODEL_COMPONENT_H
-#define MODEL_COMPONENT_H
+#pragma once
 
 #define _USE_MATH_DEFINES
 
@@ -24,5 +23,3 @@ namespace ore {
         }
     };
 }
-
-#endif

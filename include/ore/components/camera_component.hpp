@@ -1,5 +1,4 @@
-#ifndef CAMERA_COMPONENT_H
-#define CAMERA_COMPONENT_H
+#pragma once
 
 #define _USE_MATH_DEFINES
 
@@ -29,5 +28,3 @@ namespace ore {
         //     : position(position), focalPoint(focalPoint), projection(projection) {}
     };
 }
-
-#endif

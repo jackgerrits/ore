@@ -1,5 +1,7 @@
 #include <ore/shaders/entity_shader.hpp>
 
+#include <ore/components/position_3d_component.hpp>
+
 #include <iostream>
 #include <glm/ext.hpp>
 #include <glm/glm.hpp>
@@ -63,7 +65,7 @@ namespace ore {
     void entity_shader::loadEntity(entity* entity){
         // loadUniformValue(location_texMap, 0);
         // loadUniformValue(location_cubeMap, 1);
-        glm::mat4 model = entity->getModelMatrix();
+		glm::mat4 model = ore::calculateModelMatrix(*entity->getComponent<position_3d_component>());
 
         loadUniformValue(location_model, model);
     }

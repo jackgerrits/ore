@@ -1,5 +1,4 @@
-#ifndef MODEL_H
-#define MODEL_H
+#pragma once
 
 #define _USE_MATH_DEFINES
 
@@ -48,5 +47,3 @@ namespace ore {
         std::pair<float, float> getRangeInDim(int dim);
     };
 }
-
-#endif

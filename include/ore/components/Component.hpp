@@ -1,5 +1,4 @@
-#ifndef COMPONENT_H
-#define COMPONENT_H
+#pragma once
 
 #define _USE_MATH_DEFINES
 
@@ -38,5 +37,3 @@ namespace ore {
     template <typename T>
     typename base_component<T>::ThreadsafeId base_component<T>::_;
 }
-
-#endif

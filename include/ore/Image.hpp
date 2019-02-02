@@ -1,5 +1,4 @@
-#ifndef IMAGE_H
-#define IMAGE_H
+#pragma once
 
 #include <ore/lib/stb_image.h>
 #include <glm/glm.hpp>
@@ -17,5 +16,3 @@ namespace ore {
         glm::vec3 getPixel(int x, int y);
     };
 }
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef LIGHT_COMPONENT_H
-#define LIGHT_COMPONENT_H
+#pragma once
 
 #define _USE_MATH_DEFINES
 
@@ -22,5 +21,3 @@ namespace ore {
         }
     };
 }
-
-#endif

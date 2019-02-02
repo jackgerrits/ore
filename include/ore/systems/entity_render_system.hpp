@@ -1,5 +1,4 @@
-#ifndef ENTITY_RENDER_SYSTEM_H
-#define ENTITY_RENDER_SYSTEM_H
+#pragma once
 
 #define _USE_MATH_DEFINES
 
@@ -13,10 +12,7 @@
 
 #include <ore/systems/system.hpp>
 
-
 #include <glm/ext.hpp>
-#define GLM_ENABLE_EXPERIMENTAL
-#include <glm/gtx/string_cast.hpp>
 #include <vector>
 #include <map>
 #include <iostream>
@@ -53,21 +49,11 @@ namespace ore {
             shader.enable();
             shader.loadProjection(camera->projection);
             shader.loadLights(entityManager.query<light_component>());
-            std::cout << "nums found: "<< entityManager.query<light_component>().size() << std::endl;
-            for(auto l : entityManager.query<light_component>()) {
-                std::cout << "pos: " << glm::to_string(l->getPosition()) << std::endl;
-                //std::cout << "pos: " << glm::to_string(l->) << std::endl;
-                // std::cout << l->getType() << std::endl;
-
-            }
             shader.loadView(camera->view);
 
-
-            // std::cout << glm::to_string(camera->view) << std::endl;
-/*
             glEnableVertexAttribArray(0);
             glEnableVertexAttribArray(1);
-            glEnableVertexAttribArray(2);*/
+            glEnableVertexAttribArray(2);
 
             for(auto& kv : modelMappings) {
                 for(auto& part : kv.first->getModelParts()) {
@@ -90,9 +76,9 @@ namespace ore {
                 }
             }
 
- /*           glDisableVertexAttribArray(0);
+            glDisableVertexAttribArray(0);
             glDisableVertexAttribArray(1);
-            glDisableVertexAttribArray(2);*/
+            glDisableVertexAttribArray(2);
             glBindVertexArray(0);
             shader.disable();
         }
@@ -101,5 +87,3 @@ namespace ore {
         entity_shader shader;
     };
 }
-
-#endif
