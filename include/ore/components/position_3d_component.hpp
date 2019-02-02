@@ -6,8 +6,6 @@
 
 #include <glm/ext.hpp>
 #include <glm/matrix.hpp>
-#include <vector>
-
 
 namespace ore {
     class position_3d_component : public base_component<position_3d_component> {
@@ -32,26 +30,24 @@ namespace ore {
         }
     };
 
-	inline void move(position_3d_component& p3d, glm::vec3)
-	{
-
+	inline void move(position_3d_component& p3d, glm::vec3)	{
+		// TODO implement
 	}
 
-	inline glm::vec3 getDirectionVector(position_3d_component& p3d)
-	{
+	inline glm::vec3 getDirectionVector(position_3d_component& p3d)	{
 		return glm::normalize(glm::vec3(glm::sin(p3d.yRot), glm::sin(p3d.xRot), glm::cos(p3d.yRot)));
 	}
 
-	inline void placeBottomEdge(position_3d_component& p3d, float surfaceY)
-	{
+	inline void placeBottomEdge(position_3d_component& p3d, float surfaceY) {
+		// TODO implement
+
 		/*	if (model) {
 				position.y = surfaceY - model->getRangeInDim(1).first * scale.y;
 			}*/
 	}
 
 	
-	inline glm::mat4 calculateRotationMatrix(position_3d_component& p3d)
-	{
+	inline glm::mat4 calculateRotationMatrix(position_3d_component& p3d) {
 		glm::mat4 rotation(1.0f);
 
 		rotation = glm::rotate(rotation, p3d.xRot, glm::vec3(0.0f, 1.0f, 0.0f));
@@ -60,8 +56,8 @@ namespace ore {
 
 		return rotation;
 	}
-	inline glm::mat4 calculateModelMatrix(position_3d_component& p3d)
-	{
+
+	inline glm::mat4 calculateModelMatrix(position_3d_component& p3d) {
 		glm::mat4 modelMatrix(1.0f);
 
 		auto rotation_matrix = calculateRotationMatrix(p3d);
