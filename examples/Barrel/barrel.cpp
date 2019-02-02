@@ -77,26 +77,22 @@ GLFWwindow* initialise() {
     return window;
 }
 
-
 int main() {
     auto window = initialise();
+	auto barrel = loader::get().load_model(BARREL_RES_DIR "/Barrel/Barrel02.obj");
 
     ore::entity_manager em;
-    auto e = em.newEntity(new ore::position_3d_component());
+    auto e = em.new_entity(new ore::position_3d_component(), new model_component(barrel));
 
-    auto camera = em.newEntity();
-    auto light = em.newEntity();
+    auto camera = em.new_entity();
+    auto light = em.new_entity();
 
     ore::camera_system cs;
     ore::entity_render_system ers;
 
-    auto p3d = e->getComponent<position_3d_component>();
+    auto p3d = e->get_component<position_3d_component>();
     p3d->position = { 0.f, 0.f, 0.f};
-    p3d->scale = { 50,50,50 };
-
-    auto barrel = loader::getLoader().loadModel(BARREL_RES_DIR "/Barrel/Barrel02.obj");
-
-    e->assignComponent(new model_component(barrel));
+    p3d->scale = { 5,5,5 };
 
     auto lc = new light_component();
     lc->specular = vec3(1.0f, 1.0f, 1.0f);
@@ -104,12 +100,12 @@ int main() {
     lc->ambient = vec3(0.1f, 0.1f, 0.1f);
     lc->position = vec4{ 10.0f, 10.0f, 2.0f, 1.0f };
     lc->radius = 50.0f;
-    light->assignComponent(lc);
+    light->assign_component(lc);
 
     auto cc = new camera_component();
     cc->position = vec4(0.0f, 3.0f, 3.0f, 0.0f);
     cc->projection = glm::perspective(M_PI/4.0, static_cast<double>(winX) / static_cast<double>(winY), 1.0, 100.0);
-    camera->assignComponent(cc);
+    camera->assign_component(cc);
     cs.look(camera, vec3(1.f, 1.0f, 0.0f));
 
     // Main logic/render loop.
@@ -121,6 +117,12 @@ int main() {
 
         glfwSwapBuffers(window);
         glfwPollEvents();
+
+		auto et = em.new_entity(new ore::position_3d_component(), new model_component(barrel));
+		auto p3d2 = et->get_component<position_3d_component>();
+		p3d2->position = { static_cast<float>((rand() % 40) - 20), static_cast<float>((rand() % 40) - 20), static_cast<float>((rand() % 40) - 20) };
+		auto scale = rand() % 20;
+		p3d2->scale = { scale, scale, scale };
     }
 
     glfwDestroyWindow(window);

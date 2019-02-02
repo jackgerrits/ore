@@ -27,11 +27,11 @@ namespace ore {
             glEnableVertexAttribArray(0);
 
             for (auto& entity : entityManager.query<model_component>()) {
-                auto model = entity->getComponent<model_component>()->model.get();
+                auto model = entity->get_component<model_component>()->model.get();
 
-                for (auto& part : model->getModelParts()) {
-                    glBindVertexArray(part.getVaoID());
-                    glDrawElements(GL_TRIANGLES, part.getIndexCount(), GL_UNSIGNED_INT, (void*)0);
+                for (auto& part : model->get_model_parts()) {
+                    glBindVertexArray(part.get_vao_id());
+                    glDrawElements(GL_TRIANGLES, part.get_index_count(), GL_UNSIGNED_INT, (void*)0);
                     glBindVertexArray(0);
                 }
             }

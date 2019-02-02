@@ -21,19 +21,19 @@ namespace ore {
         this->textureID = -1;
     }
 
-    size_t model_part::getIndexCount() const {
+    size_t model_part::get_index_count() const {
         return indexCount;
     }
 
-    GLuint model_part::getVaoID() const {
+    GLuint model_part::get_vao_id() const {
         return vaoID;
     }
 
-    GLuint model_part::getTextureID() const {
+    GLuint model_part::get_texture_id() const {
         return textureID;
     }
 
-    material model_part::getMaterial() const {
+    material model_part::get_material() const {
         return material;
     }
 
@@ -47,7 +47,7 @@ namespace ore {
     }
 
     // Adds the vertices into the range stored for this model.
-    void model::addRange(std::vector<float> vertices) {
+    void model::add_range(std::vector<float> vertices) {
         for(int dim = 0; dim < 3; ++dim) {
             for(size_t j = dim; j < vertices.size(); j += 3) {
                 maxRanges[2 * dim] = std::min(vertices[j], maxRanges[2 * dim]);
@@ -56,7 +56,7 @@ namespace ore {
         }
     }
 
-    std::pair<float, float> model::getRangeInDim(int dim) {
+    std::pair<float, float> model::get_range_in_dim(int dim) {
         return std::pair<float, float>( maxRanges[2 * dim],  maxRanges[2 * dim + 1]);
     }
 
@@ -67,11 +67,11 @@ namespace ore {
         }
     }
 
-    void model::addModelPart(model_part part) {
+    void model::add_model_part(model_part part) {
         parts.push_back(part);
     }
 
-    const std::vector<model_part>& model::getModelParts() {
+    const std::vector<model_part>& model::get_model_parts() {
         return parts;
     }
 }

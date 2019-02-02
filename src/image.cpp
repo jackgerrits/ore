@@ -14,7 +14,7 @@ namespace ore {
         stbi_image_free(this->data);
     }
 
-    glm::vec3 image::getPixel(int x, int y) {
+    glm::vec3 image::get_pixel(int x, int y) {
         if(x < 0 || x >= width || y < 0 || y >= height) {
             // Returns a vector of -1 to indicate the image does not contain a pixel at that location.
             return glm::vec3(-1.0f, -1.0f, -1.0f);

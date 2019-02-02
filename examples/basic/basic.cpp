@@ -66,7 +66,7 @@ int main() {
     auto window = initialise();
 
     ore::entity_manager em;
-    auto e = em.newEntity();
+    auto e = em.new_entity();
 
     std::vector<float> vertices = {
          0.5f,  0.5f, 0.0f,  // top right
@@ -80,10 +80,10 @@ int main() {
         1, 2, 3    // second triangle
     };
 
-    auto vao = loader::getLoader().loadVAO(vertices, indices);
+    auto vao = loader::get().load_vao(vertices, indices);
     auto m = std::make_shared<ore::model>();
-    m->addModelPart(model_part(vao, indices.size(), 0));
-    e->assignComponent(new model_component(m));
+    m->add_model_part(model_part(vao, indices.size(), 0));
+    e->assign_component(new model_component(m));
 
     basic_render_system brs;
 

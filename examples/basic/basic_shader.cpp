@@ -6,10 +6,10 @@
 
 namespace ore {
     basic_shader::basic_shader(): shader_program(BASIC_VERTEX_SHADER, BASIC_FRAGMENT_SHADER) {
-        bindUniformLocations();
+        bind_uniform_locations();
     }
 
-    void basic_shader::bindUniformLocations() {
+    void basic_shader::bind_uniform_locations() {
         glBindAttribLocation(shaderID, 0, "a_vertex");
     }
 }

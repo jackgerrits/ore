@@ -23,6 +23,6 @@ namespace ore {
     class basic_shader : public shader_program {
     public:
         basic_shader();
-        virtual void bindUniformLocations() override;
+        virtual void bind_uniform_locations() override;
     };
 }

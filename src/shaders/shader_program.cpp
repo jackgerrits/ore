@@ -9,7 +9,7 @@
 using namespace ore;
 
 shader_program::shader_program(std::string vertexShader, std::string fragmentShader){
-    this->shaderID = loadShaders(vertexShader.c_str(), fragmentShader.c_str());
+    this->shaderID = load_shaders(vertexShader.c_str(), fragmentShader.c_str());
 }
 
 shader_program::shader_program(int shaderID){
@@ -24,47 +24,47 @@ void shader_program::disable(){
     glUseProgram(0);
 }
 
-GLuint shader_program::getShaderID() {
+GLuint shader_program::get_shader_id() {
     return shaderID;
 }
 
-void shader_program::loadUniformValue(GLuint uniformLocation, int value){
+void shader_program::load_uniform_value(GLuint uniformLocation, int value){
     glUniform1i(uniformLocation, value);
 }
 
-void shader_program::loadUniformValue(GLuint uniformLocation, unsigned int value) {
+void shader_program::load_uniform_value(GLuint uniformLocation, unsigned int value) {
     glUniform1i(uniformLocation, value);
 }
 
-void shader_program::loadUniformValue(GLuint uniformLocation, float value){
+void shader_program::load_uniform_value(GLuint uniformLocation, float value){
     glUniform1f(uniformLocation, value);
 }
 
-void shader_program::loadUniformValue(GLuint uniformLocation, glm::vec2 value){
+void shader_program::load_uniform_value(GLuint uniformLocation, glm::vec2 value){
     glUniform2fv(uniformLocation, 1, &value.x);
 }
 
-void shader_program::loadUniformValue(GLuint uniformLocation, glm::vec3 value){
+void shader_program::load_uniform_value(GLuint uniformLocation, glm::vec3 value){
     glUniform3fv(uniformLocation, 1, &value.x);
 }
 
-void shader_program::loadUniformValue(GLuint uniformLocation, glm::vec4 value){
+void shader_program::load_uniform_value(GLuint uniformLocation, glm::vec4 value){
     glUniform4fv(uniformLocation, 1, &value.x);
 }
 
-void shader_program::loadUniformValue(GLuint uniformLocation, glm::mat2 value){
+void shader_program::load_uniform_value(GLuint uniformLocation, glm::mat2 value){
     glUniformMatrix2fv(uniformLocation, 1, false, glm::value_ptr(value));
 }
 
-void shader_program::loadUniformValue(GLuint uniformLocation, glm::mat3 value){
+void shader_program::load_uniform_value(GLuint uniformLocation, glm::mat3 value){
     glUniformMatrix3fv(uniformLocation, 1, false, glm::value_ptr(value));
 }
 
-void shader_program::loadUniformValue(GLuint uniformLocation, glm::mat4 value){
+void shader_program::load_uniform_value(GLuint uniformLocation, glm::mat4 value){
     glUniformMatrix4fv(uniformLocation, 1, false, glm::value_ptr(value));
 }
 
-void shader_program::loadUniformValue(GLuint uniformLocation, float* value, int count) {
+void shader_program::load_uniform_value(GLuint uniformLocation, float* value, int count) {
     switch(count){
         case 1:
             glUniform1f(uniformLocation, *value);
@@ -83,7 +83,7 @@ void shader_program::loadUniformValue(GLuint uniformLocation, float* value, int 
     }
 }
 
-std::string ore::readFileIntoString(const char* filePath) {
+std::string ore::read_file_into_string(const char* filePath) {
     std::string fileContents;
     std::ifstream fileStream(filePath, std::ios::in);
 
@@ -103,9 +103,9 @@ std::string ore::readFileIntoString(const char* filePath) {
 }
 
 // Compile the shader file at the at the path for the shader id. Throws on failure;
-void ore::compileShader(const char* shaderPath, const GLuint shaderID) {
+void ore::compile_shader(const char* shaderPath, const GLuint shaderID) {
     // Consider using std::tie here for readability.
-    auto fileContents = readFileIntoString(shaderPath);
+    auto fileContents = read_file_into_string(shaderPath);
 
     // Compile Shader
     auto SourcePointer = fileContents.c_str();
@@ -125,14 +125,14 @@ void ore::compileShader(const char* shaderPath, const GLuint shaderID) {
     }
 }
 
-GLuint ore::loadShaders(const char* vertex_file_path, const char* fragment_file_path) {
+GLuint ore::load_shaders(const char* vertex_file_path, const char* fragment_file_path) {
     // Create the shaders.
     GLuint vertexshaderID = glCreateShader(GL_VERTEX_SHADER);
     GLuint fragmentshaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
     // Compile both shaders. Will throw if there are compile errors.
-    compileShader(vertex_file_path, vertexshaderID);
-    compileShader(fragment_file_path, fragmentshaderID);
+    compile_shader(vertex_file_path, vertexshaderID);
+    compile_shader(fragment_file_path, fragmentshaderID);
 
     // Link the program.
     GLuint programID = glCreateProgram();
