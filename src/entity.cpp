@@ -6,7 +6,7 @@ using namespace std;
 namespace ore {
     std::vector<Component*> entity::getComponents() {
         std::vector<Component*> results;
-        for(auto const& kv : components) {
+        for (auto const& kv : components) {
             results.push_back(kv.second);
         }
         return results;

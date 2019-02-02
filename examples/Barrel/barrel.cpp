@@ -108,7 +108,7 @@ int main() {
     cc->position = vec4(0.0f, 3.0f, 3.0f, 0.0f);
     cc->projection = glm::perspective(M_PI/4.0, static_cast<double>(winX) / static_cast<double>(winY), 1.0, 100.0);
     camera->assignComponent(cc);
-    cs.look(camera, vec3(0.f, 0.0f, 0.0f));
+    cs.look(camera, vec3(1.f, 1.0f, 0.0f));
 
     // Main logic/render loop.
     while (!glfwWindowShouldClose(window)) {

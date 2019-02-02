@@ -12,15 +12,8 @@ namespace ore {
     }
 
     void entity_shader::bindUniformLocations(){
-        // Setup named attributes
- /*       glBindAttribLocation(shaderID, 0, "a_vertex");
-        glBindAttribLocation(shaderID, 1, "a_normal");
-        glBindAttribLocation(shaderID, 2, "a_tex_coord");*/
 
         location_texMap = glGetUniformLocation(shaderID, "texMap");
-        location_cubeMap = glGetUniformLocation(shaderID, "cubeMap");
-        // location_shadowMap = glGetUniformLocation(shaderID, "shadowMap");
-        // location_clip_plane = glGetUniformLocation(shaderID, "clip_plane");
 
         location_projection = glGetUniformLocation(shaderID, "projection");
         location_model = glGetUniformLocation(shaderID, "model");
@@ -33,9 +26,6 @@ namespace ore {
         location_mtl_ambient = glGetUniformLocation(shaderID, "mtl_ambient");
         location_mtl_diffuse = glGetUniformLocation(shaderID, "mtl_diffuse");
         location_mtl_specular = glGetUniformLocation(shaderID, "mtl_specular");
-
-        // location_depth_pv = glGetUniformLocation(shaderID, "depth_pv");
-        // location_render_shadows = glGetUniformLocation(shaderID, "render_shadows");
     }
 
     void entity_shader::loadLights(std::vector<entity*> lights){
@@ -63,14 +53,13 @@ namespace ore {
     }
 
     void entity_shader::loadEntity(entity* entity){
-        // loadUniformValue(location_texMap, 0);
-        // loadUniformValue(location_cubeMap, 1);
+        loadUniformValue(location_texMap, 0);
 		glm::mat4 model = ore::calculateModelMatrix(*entity->getComponent<position_3d_component>());
-
         loadUniformValue(location_model, model);
     }
 
     void entity_shader::loadModelPart(const model_part& component){
+		loadUniformValue(location_texMap, component.getTextureID());
         loadUniformValue(location_mtl_ambient, component.getMaterial().ambient.data(), 3);
         loadUniformValue(location_mtl_diffuse, component.getMaterial().diffuse.data(), 3);
         loadUniformValue(location_mtl_specular, component.getMaterial().specular.data(), 3);
@@ -80,16 +69,5 @@ namespace ore {
 
     void entity_shader::loadProjection(glm::mat4 proj){
         loadUniformValue(location_projection, proj);
-        // loadUniformValue(location_render_shadows, 0);
     }
-
-    // void entity_shader::loadClipPlane(glm::vec4 clip){
-    //     loadUniformValue(location_clip_plane, clip);
-    // }
-
-    // void entity_shader::loadDepth(glm::mat4 pv){
-    //     loadUniformValue(location_shadowMap, 2);
-    //     loadUniformValue(location_depth_pv, pv);
-    //     loadUniformValue(location_render_shadows, 1);
-    // }
 }

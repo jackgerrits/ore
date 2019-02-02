@@ -1,5 +1,13 @@
 #include <ore/shaders/shader_program.hpp>
 
+#include <fstream>
+#include <vector>
+#include <iostream>
+
+#include <glm/ext.hpp>
+
+using namespace ore;
+
 shader_program::shader_program(std::string vertexShader, std::string fragmentShader){
     this->shaderID = loadShaders(vertexShader.c_str(), fragmentShader.c_str());
 }
@@ -21,6 +29,10 @@ GLuint shader_program::getShaderID() {
 }
 
 void shader_program::loadUniformValue(GLuint uniformLocation, int value){
+    glUniform1i(uniformLocation, value);
+}
+
+void shader_program::loadUniformValue(GLuint uniformLocation, unsigned int value) {
     glUniform1i(uniformLocation, value);
 }
 
@@ -52,7 +64,7 @@ void shader_program::loadUniformValue(GLuint uniformLocation, glm::mat4 value){
     glUniformMatrix4fv(uniformLocation, 1, false, glm::value_ptr(value));
 }
 
-void shader_program::loadUniformValue(GLuint uniformLocation, float* value, int count){
+void shader_program::loadUniformValue(GLuint uniformLocation, float* value, int count) {
     switch(count){
         case 1:
             glUniform1f(uniformLocation, *value);
@@ -67,20 +79,17 @@ void shader_program::loadUniformValue(GLuint uniformLocation, float* value, int 
             glUniform4fv(uniformLocation, 1, value);
             break;
         default:
-            std::cerr << "Cant load uniform with " << count << " dimensions." << std::endl;
-            break;
+			throw std::runtime_error("Cant load uniform with " + std::to_string(count) + " dimensions.");
     }
 }
 
-// If the file cannot be opened the second value in the pair will be false.
-// The pair represents (file_contents, success)
-std::pair<std::string, bool> shader_program::readFile(const char* filePath) {
+std::string ore::readFileIntoString(const char* filePath) {
     std::string fileContents;
     std::ifstream fileStream(filePath, std::ios::in);
 
     // If the file can't be opened, return an empty optional.
     if(!fileStream.is_open()) {
-        return std::make_pair("", false);
+        throw std::invalid_argument("Cannot open " + std::string(filePath) + ". Are you in the right directory?");
     }
 
     fileStream.seekg(0, std::ios::end);
@@ -90,21 +99,16 @@ std::pair<std::string, bool> shader_program::readFile(const char* filePath) {
     fileContents.assign((std::istreambuf_iterator<char>(fileStream)),
         std::istreambuf_iterator<char>());
 
-    return std::make_pair(fileContents, true);
+    return fileContents;
 }
 
-// Compile the shader file at the at the path for the shader id. Returns true for success.
-bool shader_program::compileShader(const char *shaderPath, const GLuint shaderID) {
+// Compile the shader file at the at the path for the shader id. Throws on failure;
+void ore::compileShader(const char* shaderPath, const GLuint shaderID) {
     // Consider using std::tie here for readability.
-    auto contentsOptional = readFile(shaderPath);
-
-    // If it the file read was not successful.
-    if(!contentsOptional.second) {
-      throw std::invalid_argument("Cannot open " + std::string(shaderPath) + ". Are you in the right directory?");
-    }
+    auto fileContents = readFileIntoString(shaderPath);
 
     // Compile Shader
-    char const * SourcePointer = contentsOptional.first.c_str();
+    auto SourcePointer = fileContents.c_str();
     glShaderSource(shaderID, 1, &SourcePointer , NULL);
     glCompileShader(shaderID);
 
@@ -115,29 +119,20 @@ bool shader_program::compileShader(const char *shaderPath, const GLuint shaderID
     glGetShaderiv(shaderID, GL_COMPILE_STATUS, &result);
     glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &infoLogLength);
     if (infoLogLength > 1) {
-        char* ShaderErrorMessage = new char[infoLogLength+1];
-        glGetShaderInfoLog(shaderID, infoLogLength, NULL, &ShaderErrorMessage[0]);
-        std::cerr << &ShaderErrorMessage[0] << std::endl;
-		throw std::invalid_argument(ShaderErrorMessage);
-
-
-        delete[] ShaderErrorMessage;
-        return false;
+        std::vector<char> error_message_buffer(infoLogLength);
+        glGetShaderInfoLog(shaderID, infoLogLength, NULL, error_message_buffer.data());
+        throw std::invalid_argument(std::string(begin(error_message_buffer), end(error_message_buffer)));
     }
-
-    return true;
 }
 
-GLuint shader_program::loadShaders(const char * vertex_file_path, const char * fragment_file_path ) {
+GLuint ore::loadShaders(const char* vertex_file_path, const char* fragment_file_path) {
     // Create the shaders.
     GLuint vertexshaderID = glCreateShader(GL_VERTEX_SHADER);
     GLuint fragmentshaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
-    // Compile both shaders. Exit if compile errors.
-    if (!compileShader(vertex_file_path, vertexshaderID)
-         || !compileShader(fragment_file_path, fragmentshaderID)) {
-        return 0;
-    }
+    // Compile both shaders. Will throw if there are compile errors.
+    compileShader(vertex_file_path, vertexshaderID);
+    compileShader(fragment_file_path, fragmentshaderID);
 
     // Link the program.
     GLuint programID = glCreateProgram();
@@ -152,11 +147,9 @@ GLuint shader_program::loadShaders(const char * vertex_file_path, const char * f
     glGetProgramiv(programID, GL_LINK_STATUS, &result);
     glGetProgramiv(programID, GL_INFO_LOG_LENGTH, &infoLogLength);
     if (infoLogLength > 0) {
-        char* programErrorMessage = new char[infoLogLength+1];
-        glGetProgramInfoLog(programID, infoLogLength, NULL, &programErrorMessage[0]);
-        std::cerr << &programErrorMessage[0] << std::endl;
-
-        delete[] programErrorMessage;
+        std::vector<char> error_message_buffer(infoLogLength);
+        glGetProgramInfoLog(programID, infoLogLength, NULL, error_message_buffer.data());
+        throw std::invalid_argument(std::string(begin(error_message_buffer), end(error_message_buffer)));
     }
 
     glDeleteShader(vertexshaderID);
