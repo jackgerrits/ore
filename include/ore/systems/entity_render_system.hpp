@@ -1,7 +1,5 @@
 #pragma once
 
-
-
 #include <ore/components/model_component.hpp>
 #include <ore/components/camera_component.hpp>
 #include <ore/components/position_3d_component.hpp>

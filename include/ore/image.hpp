@@ -5,12 +5,11 @@
 
 namespace ore {
     struct image {
-        unsigned char *data;
-        int width;
-        int height;
-        int channels;
+        unsigned char *data = nullptr;
+		int width = -1;
+        int height = -1;
+        int channels = -1;
 
-        image();
         image(unsigned char* data, int width, int height, int channels);
         ~image();
         glm::vec3 get_pixel(int x, int y);

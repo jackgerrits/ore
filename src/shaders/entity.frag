@@ -13,8 +13,6 @@ in vec2 st;
 layout(location = 0) out vec4 fragColour;
 
 uniform sampler2D texMap;
-uniform samplerCube cubeMap;
-// uniform sampler2DShadow shadowMap;
 
 uniform mat4 projection;
 uniform mat4 model;
@@ -79,6 +77,8 @@ vec3 ApplyLight(Light light, vec3 surfaceColor, vec3 normal, vec4 vertex_world, 
     vec3 light_surface_dir;
     float attenuation = 1.0;
 
+    float distanceToLight;
+
     if(light.position.w == 0.0) {
         //directional light
         light_surface_dir = normalize(light.position.xyz);
@@ -86,7 +86,7 @@ vec3 ApplyLight(Light light, vec3 surfaceColor, vec3 normal, vec4 vertex_world, 
     } else {
         //point light
         light_surface_dir = normalize(vec3(light.position - vertex_world));
-        float distanceToLight = length(vec3(light.position - vertex_world));
+        distanceToLight = length(vec3(light.position - vertex_world));
         attenuation = clamp(1.0 - distanceToLight*distanceToLight/(light.radius*light.radius), 0.0, 1.0);
 
         //cone restrictions (affects attenuation)
@@ -112,11 +112,14 @@ vec3 ApplyLight(Light light, vec3 surfaceColor, vec3 normal, vec4 vertex_world, 
     vec3 halfDir = normalize(light_surface_view_dir + view_dir);
     float specAngle = max(dot(halfDir, normal_view), 0.0);
 
-    vec3 reflection = reflect(view_dir, normal_view);
-    vec3 r_world = vec3(inv_view * vec4(reflection, 0.0));
-    vec3 specular = mtl_diffuse * texture(cubeMap, -r_world).rgb * light.specular * pow(specAngle, shininess);
+    // vec3 reflection = reflect(view_dir, normal_view);
+    // vec3 r_world = vec3(inv_view * vec4(reflection, 0.0));
+    vec3 specular = mtl_diffuse * light.specular * pow(specAngle, shininess);
+    // vec3 specular = mtl_diffuse * texture(cubeMap, -r_world).rgb * light.specular * pow(specAngle, shininess);
 
     return emission + ambient + attenuation*(diffuse + specular);
+
+    // return vec3(light.specular);
 }
 
 vec3 applyFog( in vec3  rgb,       // original color of the pixel
