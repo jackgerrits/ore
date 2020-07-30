@@ -18,7 +18,7 @@
 #include <iostream>
 #include <memory>
 
-#include "resource_path.h"
+#include "base_dir.h"
 #include "basic_render_system.hpp"
 
 using namespace std;
@@ -91,7 +91,7 @@ int main() {
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // Prcoess the entities with the render system.
+        // Process the entities with the render system.
         brs.process(em);
 
         glFlush();

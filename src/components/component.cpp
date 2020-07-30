@@ -1,3 +1,3 @@
-#include <ore/components/Component.hpp>
+#include <ore/components/component.hpp>
 
 int ore::currentComponentId = 0;

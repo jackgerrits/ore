@@ -6,7 +6,7 @@ namespace ore {
         this->vaoID = vaoID;
         this->indexCount = indexCount;
         this->textureID = textureID;
-        this->material = material;
+        this->m_material = material;
     }
 
     model_part::model_part(GLuint vaoID, size_t indexCount, GLuint textureID) {
@@ -34,7 +34,7 @@ namespace ore {
     }
 
     material model_part::get_material() const {
-        return material;
+        return m_material;
     }
 
     model::model(std::vector<model_part> parts) {

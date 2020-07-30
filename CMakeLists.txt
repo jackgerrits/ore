@@ -46,8 +46,16 @@ set(ore_sources
 add_library(ore ${ore_sources} ${ore_headers})
 
 configure_file(include/ore/base_dir.h.in base_dir.h)
-target_link_libraries(ore PUBLIC OpenGL::GL GLUT::GLUT GLEW::GLEW glm)
-target_include_directories(ore PUBLIC include ${CMAKE_CURRENT_BINARY_DIR})
+target_link_libraries(ore PUBLIC OpenGL::GL GLUT::GLUT GLEW::GLEW)
+# Vcpkg exports the target, but the default find_package does not. This is a
+# quick hack since the dependencies on Windows are usually with vcpkg and usually
+# apt (or some other system package manager) on Ubuntu
+if(MSVC)
+    target_link_libraries(ore PRIVATE glm)
+else()
+    target_include_directories(ore PRIVATE ${GLM_INCLUDE_DIRS})
+endif()
+target_include_directories(ore PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include ${CMAKE_CURRENT_BINARY_DIR})
 
 add_executable(ore_test
   test/component_tests.cpp test/entity_manager_tests.cpp test/entity_tests.cpp

@@ -1,4 +1,4 @@
-#include <ore/Material.hpp>
+#include <ore/material.hpp>
 
 using namespace ore;
 

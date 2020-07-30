@@ -1,6 +1,6 @@
 #pragma once
 
-#include <ore/components/Component.hpp>
+#include <ore/components/component.hpp>
 
 #include <memory>
 #include <vector>

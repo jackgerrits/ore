@@ -2,7 +2,7 @@
 
 
 
-#include <ore/Material.hpp>
+#include <ore/material.hpp>
 
 #include <vector>
 #include <cfloat>
@@ -18,7 +18,7 @@ namespace ore {
     private:
         GLuint vaoID;
         size_t indexCount;
-        material material;
+        material m_material;
 
     public:
         GLuint textureID;

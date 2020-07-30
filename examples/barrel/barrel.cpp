@@ -27,7 +27,7 @@ using namespace glm;
 
 int winX = 1024;
 int winY = 768;
-
+#include <iterator>
 template <typename T>
 std::ostream& operator<< (std::ostream& out, const std::vector<T>& v) {
   if ( !v.empty() ) {

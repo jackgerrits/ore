@@ -2,7 +2,7 @@
 
 
 
-#include <ore/components/Component.hpp>
+#include <ore/components/component.hpp>
 
 #include <glm/ext.hpp>
 #include <glm/matrix.hpp>

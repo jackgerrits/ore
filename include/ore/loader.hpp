@@ -3,7 +3,7 @@
 
 
 #include <ore/model.hpp>
-#include <ore/Image.hpp>
+#include <ore/image.hpp>
 #include <ore/lib/stb_image.h>
 #include <ore/lib/tiny_obj_loader.h>
 

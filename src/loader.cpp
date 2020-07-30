@@ -1,4 +1,5 @@
 #include <ore/loader.hpp>
+#include <cstring>
 
 #define VALS_PER_VERT 3
 #define VALS_PER_NORMAL 3
