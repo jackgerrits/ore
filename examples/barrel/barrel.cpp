@@ -1,4 +1,5 @@
 #define _USE_MATH_DEFINES
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <ore/components/camera_component.h>
 #include <ore/components/light_component.h>
