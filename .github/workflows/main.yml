@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install dependencies
-      run: apt-get -y install libglfw3-dev libglm-dev ninja-build
+      run: sudo apt-get -y install libglfw3-dev libglm-dev ninja-build
     - name: Build
       run: |
         mkdir build
@@ -23,4 +23,4 @@ jobs:
       run: |
         cd build
         ./ore_test
-      
+
