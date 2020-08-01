@@ -1,8 +1,6 @@
 # An OpenGL Rendering Engine
-<!--
-remove build status until issues sorted out
-[![Build Status](https://travis-ci.org/jackgerrits/ore.svg?branch=master)](https://travis-ci.org/jackgerrits/ore)
--->
+[![Build and test](https://github.com/jackgerrits/ore/workflows/Build%20and%20test/badge.svg?branch=master)](https://github.com/jackgerrits/ore/actions?query=workflow%3A%22Build+and+test%22)
+
 
 This is an in progress port of the engine used in my [other project](https://github.com/jackgerrits/opengl-car-game) to a generic reusable engine. It follows the entity-component-system design.
 
