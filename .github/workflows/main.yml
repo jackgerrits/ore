@@ -1,0 +1,26 @@
+name: Build and test
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: apt-get -y install libglfw3-dev libglm-dev ninja-build
+    - name: Build
+      run: |
+        mkdir build
+        cd build
+        cmake .. -G Ninja
+        ninja
+    - name: Test
+      run: |
+        cd build
+        ./ore_test
+      
