@@ -7,9 +7,14 @@ remove build status until issues sorted out
 This is an in progress port of the engine used in my [other project](https://github.com/jackgerrits/opengl-car-game) to a generic reusable engine. It follows the entity-component-system design.
 
 ## Dependencies
-The easiest way to obtain dependencies is your favorite package manager or vcpkg.
+
+### Ubuntu/Debian
+```sh
+apt-get install libglfw3-dev libglm-dev
 ```
-vcpkg install freeglut glew opengl glm
+### Vcpkg on Windows
+```sh
+vcpkg install --triplet x64-windows glfw3 glm
 ```
 See [Vcpkg docs](https://github.com/Microsoft/vcpkg/blob/master/docs/users/integration.md#with-cmake) for how to get CMake to pick these up.
 
