@@ -5,7 +5,7 @@
 #include "basic_render_system.h"
 
 int main() {
-    ore::window win;
+    ore::window window;
 
     std::vector<float> vertices = {
         0.5f,  0.5f,  0.0f,  // top right
@@ -31,13 +31,13 @@ int main() {
 
     ore::basic_render_system brs;
 
-    win.run_render_loop([&]() {
+    window.run_render_loop([&]() {
         // Process the entities with the render system.
         brs.process(em);
 
         return ore::execution_state::continue_running;
     });
 
-    win.stop();
+    window.stop();
     return 0;
 }

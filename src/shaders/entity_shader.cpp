@@ -10,10 +10,7 @@
 namespace ore {
 entity_shader::entity_shader()
     : shader_program(ENTITY_VERTEX_SHADER, ENTITY_FRAGMENT_SHADER) {
-    bind_uniform_locations();
-}
 
-void entity_shader::bind_uniform_locations() {
     location_texMap = glGetUniformLocation(shaderID, "texMap");
 
     location_projection = glGetUniformLocation(shaderID, "projection");
@@ -37,7 +34,7 @@ void entity_shader::load_lights(std::vector<entity*> lights) {
 }
 
 void entity_shader::load_light(entity* light, size_t i) {
-    light_component* lightComponent = light->get_component<light_component>();
+    const auto* lightComponent = light->get_component<light_component>();
 
     load_light_uniform("position", i, lightComponent->position);
     load_light_uniform("specular", i, lightComponent->specular);
@@ -53,10 +50,9 @@ void entity_shader::load_view(glm::mat4 view) {
     load_uniform_value(location_inv_view, glm::inverse(view));
 }
 
-void entity_shader::load_entity(entity* entity) {
+void entity_shader::load_entity(const position_3d_component& position) {
     load_uniform_value(location_texMap, 0);
-    glm::mat4 model = ore::calculate_model_matrix(
-        *entity->get_component<position_3d_component>());
+    glm::mat4 model = ore::calculate_model_matrix(position);
     load_uniform_value(location_model, model);
 }
 

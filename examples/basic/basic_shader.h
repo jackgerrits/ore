@@ -20,6 +20,5 @@ const std::string BASIC_FRAGMENT_SHADER = BASIC_RES_DIR "basic.frag";
 class basic_shader : public shader_program {
    public:
     basic_shader();
-    virtual void bind_uniform_locations() override;
 };
 }  // namespace ore

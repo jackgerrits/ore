@@ -1,9 +1,9 @@
 #pragma once
 
-#include <cassert>
 #include <glad/glad.h>
 #include <ore/components/component.h>
 
+#include <cassert>
 #include <glm/ext.hpp>
 #include <map>
 #include <memory>
@@ -48,6 +48,11 @@ class entity {
 
     template <typename T>
     T* get_component();
+
+    template <typename... Args>
+    auto get_component_list() {
+        return std::make_tuple(get_component<Args>()...);
+    }
 
     std::vector<component*> get_components();
 

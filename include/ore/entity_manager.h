@@ -29,6 +29,18 @@ class entity_manager {
     }
 
     template <typename... Args>
+    std::vector<std::tuple<Args*...>>  query_components() {
+        std::vector<std::tuple<Args*...>> found;
+        for (auto& entity : entities) {
+            if (entity->has_components<Args...>()) {
+                found.push_back(entity->get_component_list<Args...>());
+            }
+        }
+
+        return found;
+    }
+
+    template <typename... Args>
     entity* new_entity(Args&&... components) {
         auto new_entity = std::make_unique<entity>();
         new_entity->assign_components(std::forward<Args>(components)...);

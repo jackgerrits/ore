@@ -9,7 +9,7 @@
 
 namespace ore {
 std::string read_file_into_string(const char* filePath);
-void compile_shader(const char* shaderPath, const GLuint shaderID);
+void compile_shader(const char* shaderPath, GLuint shaderID);
 GLuint load_shaders(const char* vertex_file_path,
                     const char* fragment_file_path);
 
@@ -19,11 +19,10 @@ class shader_program {
     shader_program(std::string, std::string);
     shader_program(int);
 
-    virtual void bind_uniform_locations() = 0;
     virtual void enable();
     virtual void disable();
 
-    GLuint get_shader_id();
+    GLuint get_shader_id() const;
 
     template <typename T>
     void load_light_uniform(std::string property, int index, const T& value);

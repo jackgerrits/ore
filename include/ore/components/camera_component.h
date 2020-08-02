@@ -16,9 +16,9 @@ class camera_component : public base_component<camera_component> {
     glm::mat4 view;
     glm::mat4 projection;
 
-    camera_component() {}
+    camera_component() = default;
 
-    virtual std::string get_type() const { return "camera"; }
+    [[nodiscard]] virtual std::string get_type() const { return "camera"; }
 
     // CameraComponent(glm::vec3 position, glm::vec3 focalPoint, glm::mat4
     // projection)

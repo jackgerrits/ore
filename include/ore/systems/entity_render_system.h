@@ -17,20 +17,20 @@
 namespace ore {
 class entity_render_system : ore::system {
    public:
-    std::map<model*, std::vector<entity*>> get_model_entity_mapping(
-        entity_manager& entityManager) {
-        std::map<model*, std::vector<entity*>> modelMappings;
+    std::map<model*,
+             std::vector<std::tuple<position_3d_component*, model_component*>>>
+    get_model_entity_mapping(
+        const std::vector<std::tuple<position_3d_component*, model_component*>>&
+            entities) {
+        std::map<
+            model*,
+            std::vector<std::tuple<position_3d_component*, model_component*>>>
+            modelMappings;
 
-        for (auto& entity :
-             entityManager.query<position_3d_component, model_component>()) {
-            model* model =
-                entity->get_component<model_component>()->m_model.get();
+        for (auto [pos, mod] : entities) {
+            model* model = mod->m_model.get();
 
-            if (modelMappings.count(model) == 0) {
-                modelMappings[model] = std::vector<ore::entity*>();
-            }
-
-            modelMappings[model].push_back(entity);
+            modelMappings[model].push_back({pos, mod});
         }
 
         return modelMappings;
@@ -38,13 +38,12 @@ class entity_render_system : ore::system {
 
     // Render order. Sort models, load lights, render entities in groups by
     // model.
-    virtual void process(entity_manager& entityManager) override {
+    void process(entity_manager& entityManager) override {
         // Construct a map of models so that data only needs to be loaded once
         // per pass.
-        auto modelMappings = get_model_entity_mapping(entityManager);
 
-        auto camera = entityManager.query<camera_component>()[0]
-                          ->get_component<camera_component>();
+        const auto* camera = entityManager.query<camera_component>()[0]
+                                 ->get_component<camera_component>();
 
         shader.enable();
         shader.load_projection(camera->projection);
@@ -55,8 +54,13 @@ class entity_render_system : ore::system {
         glEnableVertexAttribArray(1);
         glEnableVertexAttribArray(2);
 
-        for (auto& kv : modelMappings) {
-            for (auto& part : kv.first->get_model_parts()) {
+        const auto& components =
+            entityManager
+                .query_components<position_3d_component, model_component>();
+        const auto& modelMappings = get_model_entity_mapping(components);
+
+        for (const auto& [model, entities] : modelMappings) {
+            for (const auto& part : model->get_model_parts()) {
                 shader.load_model_part(part);
 
                 glActiveTexture(GL_TEXTURE0);
@@ -66,11 +70,10 @@ class entity_render_system : ore::system {
 
                 glBindVertexArray(part.get_vao_id());
 
-                for (auto& entity : kv.second) {
-                    shader.load_entity(entity);
-
+                for (const auto& [pos, mod] : entities) {
+                    shader.load_entity(*pos);
                     glDrawElements(GL_TRIANGLES, part.get_index_count(),
-                                   GL_UNSIGNED_INT, (void*)0);
+                                   GL_UNSIGNED_INT, (void*)nullptr);
                 }
 
                 glBindVertexArray(0);

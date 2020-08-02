@@ -24,12 +24,10 @@ class entity_shader : public shader_program {
    public:
     entity_shader();
 
-    virtual void bind_uniform_locations();
-
     void load_lights(std::vector<entity*> lights);
     void load_light(entity* light, size_t i);
     void load_view(glm::mat4 view);
-    void load_entity(entity* entity);
+    void load_entity(const position_3d_component& position);
     void load_model_part(const model_part& component);
     void load_projection(glm::mat4 proj);
 

@@ -25,13 +25,13 @@ struct component {
 // properly initialise the id.
 template <typename T>
 struct base_component : public component {
-    static struct ThreadsafeId {
+    static struct thread_safe_id {
         int id;
-        ThreadsafeId() { id = componentId<T>(); }
+        thread_safe_id() { id = componentId<T>(); }
     } _;
     int getId() override { return _.id; }
 };
 
 template <typename T>
-typename base_component<T>::ThreadsafeId base_component<T>::_;
+typename base_component<T>::thread_safe_id base_component<T>::_;
 }  // namespace ore

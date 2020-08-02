@@ -22,9 +22,9 @@ class basic_render_system : public system {
         shader.enable();
         glEnableVertexAttribArray(0);
 
-        for (const auto& entity : entityManager.query<model_component>()) {
-            auto model =
-                entity->get_component<model_component>()->m_model.get();
+        for (const auto [mod] :
+             entityManager.query_components<model_component>()) {
+            auto model = mod->m_model.get();
 
             for (const auto& part : model->get_model_parts()) {
                 glBindVertexArray(part.get_vao_id());

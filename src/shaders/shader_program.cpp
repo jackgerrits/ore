@@ -18,7 +18,7 @@ void shader_program::enable() { glUseProgram(shaderID); }
 
 void shader_program::disable() { glUseProgram(0); }
 
-GLuint shader_program::get_shader_id() { return shaderID; }
+GLuint shader_program::get_shader_id() const { return shaderID; }
 
 void shader_program::load_uniform_value(GLuint uniformLocation, int value) {
     glUniform1i(uniformLocation, value);
@@ -85,34 +85,34 @@ void shader_program::load_uniform_value(GLuint uniformLocation, float* value,
 }
 
 std::string ore::read_file_into_string(const char* filePath) {
-    std::string fileContents;
-    std::ifstream fileStream(filePath, std::ios::in);
+    std::string file_contents;
+    std::ifstream file_stream(filePath, std::ios::in);
 
     // If the file can't be opened, return an empty optional.
-    if (!fileStream.is_open()) {
+    if (!file_stream.is_open()) {
         throw std::invalid_argument("Cannot open " + std::string(filePath) +
                                     ". Are you in the right directory?");
     }
 
-    fileStream.seekg(0, std::ios::end);
-    fileContents.reserve(fileStream.tellg());
-    fileStream.seekg(0, std::ios::beg);
+    file_stream.seekg(0, std::ios::end);
+    file_contents.reserve(file_stream.tellg());
+    file_stream.seekg(0, std::ios::beg);
 
-    fileContents.assign((std::istreambuf_iterator<char>(fileStream)),
+    file_contents.assign((std::istreambuf_iterator<char>(file_stream)),
                         std::istreambuf_iterator<char>());
 
-    return fileContents;
+    return file_contents;
 }
 
 // Compile the shader file at the at the path for the shader id. Throws on
 // failure;
-void ore::compile_shader(const char* shaderPath, const GLuint shaderID) {
+void ore::compile_shader(const char* shaderPath, GLuint shaderID) {
     // Consider using std::tie here for readability.
     auto fileContents = read_file_into_string(shaderPath);
 
     // Compile Shader
-    auto SourcePointer = fileContents.c_str();
-    glShaderSource(shaderID, 1, &SourcePointer, NULL);
+    auto shader_source = fileContents.c_str();
+    glShaderSource(shaderID, 1, &shader_source, nullptr);
     glCompileShader(shaderID);
 
     // Check Shader
@@ -123,7 +123,7 @@ void ore::compile_shader(const char* shaderPath, const GLuint shaderID) {
     glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &infoLogLength);
     if (infoLogLength > 1) {
         std::vector<char> error_message_buffer(infoLogLength);
-        glGetShaderInfoLog(shaderID, infoLogLength, NULL,
+        glGetShaderInfoLog(shaderID, infoLogLength, nullptr,
                            error_message_buffer.data());
         throw std::invalid_argument(std::string(begin(error_message_buffer),
                                                 end(error_message_buffer)));
