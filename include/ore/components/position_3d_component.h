@@ -2,6 +2,8 @@
 
 #include <ore/components/component.h>
 
+#include <stdexcept>
+
 #include <glm/ext.hpp>
 #include <glm/matrix.hpp>
 
